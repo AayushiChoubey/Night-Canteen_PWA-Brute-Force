@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/slices/userSlice";
+import { logout } from "../../../../../redux/slices/userSlice";
 
 const HomePage = () => {
     const dispatch = useDispatch();

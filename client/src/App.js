@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { login } from './redux/slices/userSlice';
+import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
+import HomePage from './admin/pages/public/pages/HomePage/HomePage';
+import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,6 +33,8 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<HomePage />} />
+      <Route path='/admin/dashboard' element={<AdminDashboard />} />
+      <Route path='/admin/edit' element={<AdminEditPage />} />
     </Routes>
   );
 }
