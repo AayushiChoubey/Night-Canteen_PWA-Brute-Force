@@ -1,9 +1,9 @@
 const HomePage = () => {
-    return ( 
+    return (
         <div>
-            Home Page
+            <div id='googleSignInDiv'></div>
         </div>
-     );
+    );
 }
- 
+
 export default HomePage;
