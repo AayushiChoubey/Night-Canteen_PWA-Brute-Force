@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserRedux } from './redux/slices/userSlice';
@@ -7,12 +7,15 @@ import { random, setDishesRedux} from './redux/slices/dishSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
+import NavbarComponent from './public/components/NavbarComponent';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
+import LoginPage from './public/pages/LoginPage/LoginPage';
 
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // user authentication
   useEffect(() => {
@@ -31,6 +34,8 @@ const App = () => {
   const handleGoogleCallbackResponse = (response) => {
     const decodedToken = jwtDecode(response.credential);
     dispatch(loginUserRedux(decodedToken));
+    navigate('/')
+    document.body.style.backgroundColor = '#fff';
   }
 
   // get all dishes
@@ -46,11 +51,15 @@ const App = () => {
   }, [])
 
   return (
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/admin/dashboard' element={<AdminDashboard />} />
-      <Route path='/admin/edit' element={<AdminEditPage />} />
-    </Routes>
+    <>
+      <NavbarComponent/>
+      <Routes>
+        <Route exact path='/' element={<HomePage />} />
+        <Route exact path='/login' element={<LoginPage/>} />
+        <Route exact path='/admin/dashboard' element={<AdminDashboard />} />
+        <Route exact path='/admin/edit' element={<AdminEditPage />} />
+      </Routes>
+    </>
   );
 }
 

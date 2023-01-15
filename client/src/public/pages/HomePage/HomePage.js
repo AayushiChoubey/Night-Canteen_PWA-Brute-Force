@@ -18,7 +18,7 @@ const HomePage = () => {
                 </>
                 :
                 <>
-                    <div id='googleSignInDiv'></div>
+                    <div id='googleSignInDiv2'></div>
                 </>
             }
         </div>
