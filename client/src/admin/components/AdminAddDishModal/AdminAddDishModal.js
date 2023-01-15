@@ -89,7 +89,7 @@ const AdminAddDishModal = (props) => {
                     <Button variant="secondary" onClick={props.onHide}>
                         Cancel
                     </Button>
-                    <Button variant="primary" type="submit">
+                    <Button variant="warning" type="submit">
                         Confirm
                     </Button>
                 </Modal.Footer>

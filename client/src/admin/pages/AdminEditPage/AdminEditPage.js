@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import AdminAddDishModal from "../../components/AdminAddDishModal/AdminAddDishModal";
 import AdminDishCard from "../../components/AdminDishCard/AdminDishCard";
@@ -16,26 +16,22 @@ const AdminEditPage = () => {
         <>
             <div>
                 {/* first div for buttons */}
-                <div
-                    className="d-flex justify-content-end"
-                >
-                    <Button
-                        onClick={() => setShowAddDishModal(true)}
-                    >
-                        Add dish
-                    </Button>
-                </div>
+                <Container className="text-center my-4" onClick={() => setShowAddDishModal(true)}>
+                    <img src="/assets/images/vectors/addnew.png" style={{width:"12rem"}} alt="add food item"/>
+                </Container>
 
                 {/* second div for showing dish cards */}
                 <div
 
                 >
-                    <h1
-                        className="display-1 text-decoration-underline text-center"
-                    >
-                        Dishes
+                    <h1 className="text-center">
+                        Current Menu
                     </h1>
-
+                    <hr style={{
+                        margin:'auto',
+                        width:"150px",
+                        border:"2px solid #FFC107"
+                    }}/>
                     <div
                         className="d-flex flex-wrap"
                     >
