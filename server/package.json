@@ -14,6 +14,7 @@
     "express": "^4.18.2",
     "firebase": "^9.15.0",
     "querystring": "^0.2.1",
+    "razorpay": "^2.8.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
