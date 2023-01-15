@@ -11,15 +11,17 @@ const { collection, addDoc } = require("firebase/firestore");
 // dishImage
 
 router.post('/add', async (req, res) => {
+    console.log(req.body);
+
     try {
         const data = {};
         data['dishId'] = uuid.v4();
         data['dishName'] = req.body['dishName'];
         data['dishPrice'] = req.body['dishPrice'];
+        data['dishImage'] = req.body['dishImage'];
 
         try {
-            const dish = await addDoc(collection(db, "dishes"), data)
-            console.log(dish);
+            const dish = await addDoc(collection(db, "dishes"), data);
             res.status(200).json({
                 'dish': dish
             });

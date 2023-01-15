@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
+import { addDish } from '../../../repository/dishHandler';
 
 const AdminAddDishModal = (props) => {
     const [dishName, setDishName] = useState('');
@@ -15,8 +16,18 @@ const AdminAddDishModal = (props) => {
         }
     }
 
-    const handleCourseFormSubmit = (event) => {
+    const handleCourseFormSubmit = async (event) => {
         event.preventDefault();
+
+        if (dishImageFileRef && dishImageFileRef.current) {
+            try {
+                await addDish(dishName, dishPrice, selectedDishImage);
+                alert('Dish added successfully!');
+                props.onHide();
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 
     return (
