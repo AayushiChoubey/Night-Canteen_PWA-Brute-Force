@@ -1,30 +1,22 @@
-import { useEffect, useState } from "react";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { addDishCartRedux, removeDishCartRedux } from "../../../redux/slices/cartSlice";
+import { removeDishCartRedux } from "../../../redux/slices/cartSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const DishCard = (props) => {
+const CartDishCard = (props) => {
     const dishId = props.dishId;
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const [dish, setDish] = useState(null);
     useEffect(() => {
         const requiredDish = dishes.find((dish) => dish['dishId'] === dishId);
         setDish(requiredDish);
-    });
+    }, [dishId, dishes]);
 
     const dispatch = useDispatch();
 
-    const [orderCount, setOrderCount] = useState(0);
-    const handleClickMinusIcon = () => {
-        if (orderCount > 0) {
-            setOrderCount(orderCount - 1);
-            dispatch(removeDishCartRedux(dishId));
-        }
-    }
-    const handleClickPlusIcon = () => {
-        setOrderCount(orderCount + 1);
-        dispatch(addDishCartRedux(dishId));
+    const handleClickDeleteIcon = () => {
+        dispatch(removeDishCartRedux(dishId));
     }
 
     return (
@@ -49,25 +41,13 @@ const DishCard = (props) => {
             <div
                 className="d-flex justify-content-between gap-5"
             >
-                <span>{dish && dish['dishPrice']}</span>
-
                 <div
                     className="d-flex gap-2"
                 >
                     <FontAwesomeIcon
-                        icon={faMinus}
+                        icon={faTrash}
                         className="btn btn-primary"
-                        onClick={handleClickMinusIcon}
-                    />
-                    <span
-                        className="p-1 border rounded"
-                    >
-                        {orderCount}
-                    </span>
-                    <FontAwesomeIcon
-                        icon={faPlus}
-                        className="btn btn-primary"
-                        onClick={handleClickPlusIcon}
+                        onClick={handleClickDeleteIcon}
                     />
                 </div>
             </div>
@@ -75,4 +55,4 @@ const DishCard = (props) => {
     );
 }
 
-export default DishCard;
+export default CartDishCard;

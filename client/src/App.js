@@ -10,6 +10,7 @@ import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
+import CartPage from './public/pages/CartPage/CartPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,11 @@ const App = () => {
 
   return (
     <Routes>
+      {/* public routes */}
       <Route path='/' element={<HomePage />} />
+      <Route path='/cart' element={<CartPage />} />
+
+      {/* admin routes */}
       <Route path='/admin/dashboard' element={<AdminDashboard />} />
       <Route path='/admin/edit' element={<AdminEditPage />} />
     </Routes>

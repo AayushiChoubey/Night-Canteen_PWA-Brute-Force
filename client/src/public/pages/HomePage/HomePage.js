@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserRedux } from "../../../redux/slices/userSlice";
-import DishCard from "../../components/DishCard/DishCard";
+import HomeDishCard from "../../components/HomeDishCard/HomeDishCard";
+import { useNavigate } from 'react-router-dom';
+import { Button } from "react-bootstrap";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -12,9 +14,14 @@ const HomePage = () => {
         dispatch(logoutUserRedux());
     }
 
+    const navigator = useNavigate();
+    const handleCartClick = () => {
+        navigator('/cart');
+    }
+
     return (
         <div>
-            {/* sasta navbar */}
+            {/* navbar */}
             <div
                 className="d-flex justify-content-end"
             >
@@ -42,7 +49,7 @@ const HomePage = () => {
                 >
                     {dishes && dishes.map((dish) => {
                         return (
-                            <DishCard
+                            <HomeDishCard
                                 key={dish['dishId']}
                                 dishId={dish['dishId']}
                             />
@@ -51,6 +58,12 @@ const HomePage = () => {
                     }
                 </div>
             </div>
+
+            <Button
+                onClick={handleCartClick}
+            >
+                Cart
+            </Button>
         </div>
     );
 }

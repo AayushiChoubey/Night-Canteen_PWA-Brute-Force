@@ -21,7 +21,7 @@ export const cartSlice = createSlice({
 
             state.value = tempDishes;
         },
-        removeDishCartRedux: (state, action) => {
+        reduceDishCartRedux: (state, action) => {
             const tempDishes = state.value;
             const dishId = action.payload;
             const index = tempDishes.findIndex((dish) => dish['dishId'] === dishId);
@@ -33,10 +33,20 @@ export const cartSlice = createSlice({
             }
 
             state.value = tempDishes;
+        },
+        removeDishCartRedux: (state, action) => {
+            const tempDishes = state.value;
+            const dishId = action.payload;
+            const index = tempDishes.findIndex((dish) => dish['dishId'] === dishId);
+            if (index !== -1) {
+                tempDishes.splice(index, 1);
+            }
+
+            state.value = tempDishes;
         }
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { addDishCartRedux, removeDishCartRedux } = cartSlice.actions;
+export const { addDishCartRedux, reduceDishCartRedux, removeDishCartRedux } = cartSlice.actions;
 export default cartSlice.reducer;
