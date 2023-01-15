@@ -16,7 +16,7 @@ function NavbarComponent() {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark" variant="dark" sticky="top">
                 <Container>
                     <Navbar.Brand as={Link} to="#home"><img src="/favicon-32x32.png" alt="" /></Navbar.Brand>
                     <Nav className="me-auto">
