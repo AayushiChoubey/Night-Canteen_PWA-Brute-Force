@@ -33,7 +33,7 @@ const AdminEditPage = () => {
                         border:"2px solid #FFC107"
                     }}/>
 
-                    <Card className="m-auto mt-4" style={{width:"23rem", border:"none", boxShadow:"0 0 8px 0 rgb(0 0 0 / 15%)"}}>
+                    <Card className="m-auto mt-4" style={{width:"85%", border:"none", boxShadow:"0 0 8px 0 rgb(0 0 0 / 15%)"}}>
                         <Card.Body>
                             {dishes && dishes.map((dish) =>
                                 <AdminDishCard
@@ -43,11 +43,6 @@ const AdminEditPage = () => {
                             )}
                         </Card.Body>
                     </Card>
-                    <div
-                        className="d-flex flex-wrap"
-                    >
-                        
-                    </div>
                 </div>
             </div>
 
