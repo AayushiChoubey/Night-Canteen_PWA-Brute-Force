@@ -4,3 +4,18 @@
   box-sizing: border-box;
   font-family: 'Alice', serif;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #a7a7a7;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(78, 77, 77);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFC107;
+}
