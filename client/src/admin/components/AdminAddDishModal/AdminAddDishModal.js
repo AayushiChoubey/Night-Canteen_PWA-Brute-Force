@@ -16,7 +16,7 @@ const AdminAddDishModal = (props) => {
         }
     }
 
-    const handleCourseFormSubmit = async (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         if (dishImageFileRef && dishImageFileRef.current) {
@@ -36,7 +36,7 @@ const AdminAddDishModal = (props) => {
             onHide={props.onHide}
         >
             <Form
-                onSubmit={handleCourseFormSubmit}
+                onSubmit={handleFormSubmit}
             >
                 {/* header */}
                 <Modal.Header closeButton>

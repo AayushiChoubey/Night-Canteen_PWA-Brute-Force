@@ -28,7 +28,14 @@ export const deleteDish = (dishId) => {
     const data = {};
     data['dishId'] = dishId;
 
-    console.log(data);
-
     return axios.post(`${process.env.REACT_APP_API_URL}/dish/delete`, data);
+}
+
+export const editDishWithoutImage = (dishId, dishName, dishPrice) => {
+    const data = {};
+    data['dishId'] = dishId;
+    data['dishName'] = dishName;
+    data['dishPrice'] = dishPrice;
+
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/editWithoutImage`, data);
 }

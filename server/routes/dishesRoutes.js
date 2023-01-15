@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
-const { collection, addDoc, getDocs, deleteDoc, query, where, getDoc, doc } = require("firebase/firestore");
+const { collection, addDoc, getDocs, deleteDoc, query, where, getDoc, doc, updateDoc } = require("firebase/firestore");
 
 // dishModel
 // dishId
@@ -71,6 +71,30 @@ router.post('/delete', async (req, res) => {
 
         res.status(200).json({
             'message': 'dish deleted successfully!'
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            'message': 'Internal server error! Please try again later!'
+        })
+    }
+})
+
+router.post('/editWithoutImage', async (req, res) => {
+    try {
+        const data = {};
+        data['dishName'] = req.body['dishName'];
+        data['dishPrice'] = req.body['dishPrice'];
+
+        const dishId = req.body['dishId'];
+
+        const q = query(collection(db, 'dishes'), where("dishId", "==", dishId));
+        const querySnapshot = await getDocs(q);
+        const requiredDocRef = querySnapshot.docs[0].ref;
+        await updateDoc(requiredDocRef, data);
+
+        res.status(200).json({
+            'message': 'dish edited successfully!'
         });
     } catch (err) {
         console.log(err);
