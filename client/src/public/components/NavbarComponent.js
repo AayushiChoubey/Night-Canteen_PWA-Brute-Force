@@ -23,7 +23,8 @@ function NavbarComponent() {
                         <Nav.Link href="/home">Home</Nav.Link>
                     </Nav>
                     <Nav className="align-items-center">
-                        <Nav.Link as={NavLink} to="/cart"><i className="me-2 fa-solid fa-cart-shopping"/>Cart</Nav.Link>
+                        {/* <Nav.Link as={NavLink} to="/cart"><i className="me-2 fa-solid fa-cart-shopping"/>Cart</Nav.Link> */}
+                        <Nav.Link as={NavLink} to="/admin/edit"><i className="me-2 fa-solid fa-plus" />Add Dishes</Nav.Link>
                         {
                             user ?
                                 <Nav.Link>
