@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
-const { collection, addDoc } = require("firebase/firestore");
+const { collection, addDoc, getDocs } = require("firebase/firestore");
 
 // dishModel
 // dishId
@@ -11,8 +11,6 @@ const { collection, addDoc } = require("firebase/firestore");
 // dishImage
 
 router.post('/add', async (req, res) => {
-    console.log(req.body);
-
     try {
         const data = {};
         data['dishId'] = uuid.v4();
@@ -33,6 +31,25 @@ router.post('/add', async (req, res) => {
         }
 
 
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            'message': 'Internal server error! Please try again later!'
+        })
+    }
+});
+
+router.get('/getAll', async (req, res) => {
+    try {
+        const snapshot = await getDocs(collection(db, "dishes"));
+        const data = [];
+        snapshot.forEach((doc) => {
+            data.push(doc.data());
+        });
+        
+        res.status(200).json({
+            'dishes': data
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json({

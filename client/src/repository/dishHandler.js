@@ -19,3 +19,7 @@ export const addDish = async (dishName, dishPrice, dishImage) => {
 
     return axios.post(`${process.env.REACT_APP_API_URL}/dish/add`, data);
 }
+
+export const getAllDishes = () => {
+    return axios.get(`${process.env.REACT_APP_API_URL}/dish/getAll`);
+}

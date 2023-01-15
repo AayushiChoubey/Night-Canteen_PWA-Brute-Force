@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { useDispatch } from 'react-redux';
-import { login } from './redux/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserRedux } from './redux/slices/userSlice';
+import { random, setDishesRedux} from './redux/slices/dishSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './admin/pages/public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getAllDishes } from './repository/dishHandler';
 
 const App = () => {
   const dispatch = useDispatch();
 
+  // user authentication
   useEffect(() => {
     // load google from global script
     window.google.accounts.id.initialize({
@@ -27,8 +30,20 @@ const App = () => {
   }, [])
   const handleGoogleCallbackResponse = (response) => {
     const decodedToken = jwtDecode(response.credential);
-    dispatch(login(decodedToken));
+    dispatch(loginUserRedux(decodedToken));
   }
+
+  // get all dishes
+  useEffect(() => {
+    getAllDishes()
+      .then((response) => {
+        const dishes = response.data['dishes'];
+        dispatch(setDishesRedux(dishes));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
 
   return (
     <Routes>
