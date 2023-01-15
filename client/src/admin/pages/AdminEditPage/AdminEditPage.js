@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import AdminAddDishModal from "../../components/AdminAddDishModal/AdminAddDishModal";
 import AdminDishCard from "../../components/AdminDishCard/AdminDishCard";
@@ -32,15 +32,21 @@ const AdminEditPage = () => {
                         width:"150px",
                         border:"2px solid #FFC107"
                     }}/>
+
+                    <Card className="m-auto mt-4" style={{width:"23rem", border:"none", boxShadow:"0 0 8px 0 rgb(0 0 0 / 15%)"}}>
+                        <Card.Body>
+                            {dishes && dishes.map((dish) =>
+                                <AdminDishCard
+                                    key={dish['dishId']}
+                                    dishId={dish['dishId']}
+                                />
+                            )}
+                        </Card.Body>
+                    </Card>
                     <div
                         className="d-flex flex-wrap"
                     >
-                        {dishes && dishes.map((dish) =>
-                            <AdminDishCard
-                                key={dish['dishId']}
-                                dishId={dish['dishId']}
-                            />
-                        )}
+                        
                     </div>
                 </div>
             </div>
