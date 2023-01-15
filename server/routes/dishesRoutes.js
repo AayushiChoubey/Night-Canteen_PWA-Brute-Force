@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
-const { collection, addDoc, getDocs } = require("firebase/firestore");
+const { collection, addDoc, getDocs, deleteDoc, query, where, getDoc, doc } = require("firebase/firestore");
 
 // dishModel
 // dishId
@@ -46,9 +46,31 @@ router.get('/getAll', async (req, res) => {
         snapshot.forEach((doc) => {
             data.push(doc.data());
         });
-        
+
         res.status(200).json({
             'dishes': data
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            'message': 'Internal server error! Please try again later!'
+        })
+    }
+})
+
+router.post('/delete', async (req, res) => {
+    try {
+        const dishId = req.body['dishId'];
+        // find and delete doc from firestore have field dishId
+
+
+        const q = query(collection(db, 'dishes'), where("dishId", "==", dishId));
+        const querySnapshot = await getDocs(q);
+        const requiredDocRef = querySnapshot.docs[0].ref;
+        await deleteDoc(requiredDocRef);
+
+        res.status(200).json({
+            'message': 'dish deleted successfully!'
         });
     } catch (err) {
         console.log(err);

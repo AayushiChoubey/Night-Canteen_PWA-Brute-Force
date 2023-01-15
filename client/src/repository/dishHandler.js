@@ -23,3 +23,12 @@ export const addDish = async (dishName, dishPrice, dishImage) => {
 export const getAllDishes = () => {
     return axios.get(`${process.env.REACT_APP_API_URL}/dish/getAll`);
 }
+
+export const deleteDish = (dishId) => {
+    const data = {};
+    data['dishId'] = dishId;
+
+    console.log(data);
+
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/delete`, data);
+}

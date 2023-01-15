@@ -37,7 +37,7 @@ const AdminEditPage = () => {
                     </h1>
 
                     <div
-                        className="d-flex flex-wrap"
+                        className="d-flex flex-wrap gap-2"
                     >
                         {dishes && dishes.map((dish) =>
                             <AdminDishCard

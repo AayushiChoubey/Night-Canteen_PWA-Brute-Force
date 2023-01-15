@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserRedux } from './redux/slices/userSlice';
-import { random, setDishesRedux} from './redux/slices/dishSlice';
+import { random, setDishesRedux } from './redux/slices/dishSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
-import HomePage from './admin/pages/public/pages/HomePage/HomePage';
+import HomePage from './public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
