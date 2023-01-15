@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
-const { collection, addDoc, getDocs, deleteDoc, query, where, getDoc, doc, updateDoc } = require("firebase/firestore");
+const { collection, addDoc, getDocs, deleteDoc, query, where, updateDoc } = require("firebase/firestore");
 
 // dishModel
 // dishId

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUserRedux } from './redux/slices/userSlice';
-import { random, setDishesRedux } from './redux/slices/dishSlice';
+import { setDishesRedux } from './redux/slices/dishSlice';
+import { setOrdersRedux, setOrdersSlice } from './redux/slices/orderSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
@@ -11,6 +12,7 @@ import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
 import CartPage from './public/pages/CartPage/CartPage';
+import { getAllOrders } from './repository/orderHandler';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,6 +49,18 @@ const App = () => {
         console.log(err);
       });
   }, [])
+
+  // get all orders
+  useEffect(() => {
+    getAllOrders()
+      .then((response) => {
+        const orders = response.data['orders'];
+        dispatch(setOrdersRedux(orders));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Routes>

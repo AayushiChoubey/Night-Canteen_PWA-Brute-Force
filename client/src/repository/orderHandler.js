@@ -14,3 +14,7 @@ export const verifyPaymentOrder = async (razorpay_payment_id, razorpay_order_id,
         razorpay_signature: razorpay_signature,
     })
 }
+
+export const getAllOrders = () => {
+    return axios.get(`${process.env.REACT_APP_API_URL}/order/getAll`);
+}
