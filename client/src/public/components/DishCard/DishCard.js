@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faImage, faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { addDishCartRedux, removeDishCartRedux } from "../../../redux/slices/cartSlice";
 
 const DishCard = (props) => {
     const dishId = props.dishId;
@@ -10,16 +11,20 @@ const DishCard = (props) => {
     useEffect(() => {
         const requiredDish = dishes.find((dish) => dish['dishId'] === dishId);
         setDish(requiredDish);
-    })
+    });
+
+    const dispatch = useDispatch();
 
     const [orderCount, setOrderCount] = useState(0);
     const handleClickMinusIcon = () => {
         if (orderCount > 0) {
             setOrderCount(orderCount - 1);
+            dispatch(removeDishCartRedux(dishId));
         }
     }
     const handleClickPlusIcon = () => {
         setOrderCount(orderCount + 1);
+        dispatch(addDishCartRedux(dishId));
     }
 
     return (
@@ -55,7 +60,7 @@ const DishCard = (props) => {
                         onClick={handleClickMinusIcon}
                     />
                     <span
-                    className="p-1 border rounded"
+                        className="p-1 border rounded"
                     >
                         {orderCount}
                     </span>
