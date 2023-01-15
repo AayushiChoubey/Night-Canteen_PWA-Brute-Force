@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faImage, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { deleteDish } from "../../../repository/dishHandler";
 import AdminEditDishModal from "../AdminEditDishModal/AdminEditDishModal";
+import AdminEditDishImageModal from "../AdminEditDishImageModal/AdminEditDishImageModal";
 
 
 const AdminDishCard = (props) => {
@@ -30,6 +31,14 @@ const AdminDishCard = (props) => {
         setShowEditDishModal(true);
     }
 
+    const [showEditDishImageModal, setShowEditDishImageModal] = useState(false);
+    const handleHideEditDishImageModal = () => {
+        setShowEditDishImageModal(false);
+    }
+    const handleClickEditImageIcon = () => {
+        setShowEditDishImageModal(true);
+    }
+
     return (
         <>
             <div
@@ -46,12 +55,24 @@ const AdminDishCard = (props) => {
                     className="btn btn-primary"
                     onClick={handleClickEditIcon}
                 />
+                <FontAwesomeIcon
+                    icon={faImage}
+                    className="btn btn-primary"
+                    onClick={handleClickEditImageIcon}
+                />
             </div>
 
-            {/* Edit dish modal */}
+            {/* edit dish modal */}
             <AdminEditDishModal
                 show={showEditDishModal}
                 onHide={handleHideEditDishModal}
+                dishId={dishId}
+            />
+
+            {/* edit dish image modal */}
+            <AdminEditDishImageModal
+                show={showEditDishImageModal}
+                onHide={handleHideEditDishImageModal}
                 dishId={dishId}
             />
         </>

@@ -102,6 +102,29 @@ router.post('/editWithoutImage', async (req, res) => {
             'message': 'Internal server error! Please try again later!'
         })
     }
-})
+});
+
+router.post('/editImage', async (req, res) => {
+    try {
+        const data = {};
+        data['dishImage'] = req.body['dishImage'];
+
+        const dishId = req.body['dishId'];
+
+        const q = query(collection(db, 'dishes'), where("dishId", "==", dishId));
+        const querySnapshot = await getDocs(q);
+        const requiredDocRef = querySnapshot.docs[0].ref;
+        await updateDoc(requiredDocRef, data);
+
+        res.status(200).json({
+            'message': 'dish image updated successfully!'
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            'message': 'Internal server error! Please try again later!'
+        })
+    }
+});
 
 module.exports = router;

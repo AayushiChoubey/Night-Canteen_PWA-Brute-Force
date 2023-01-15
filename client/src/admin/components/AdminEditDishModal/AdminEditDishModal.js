@@ -72,7 +72,6 @@ const AdminEditDishModal = (props) => {
                 </Modal.Footer>
             </Form>
         </Modal>
-
     );
 }
 

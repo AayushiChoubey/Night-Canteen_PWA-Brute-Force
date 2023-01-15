@@ -16,18 +16,20 @@ const App = () => {
 
   // user authentication
   useEffect(() => {
-    // load google from global script
-    window.google.accounts.id.initialize({
-      client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
-      callback: handleGoogleCallbackResponse
-    });
+    if (window.google) {
+      // load google from global script
+      window.google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
+        callback: handleGoogleCallbackResponse
+      });
 
-    window.google.accounts.id.renderButton(
-      document.getElementById('googleSignInDiv'), {
-      theme: 'outline', size: 'large'
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInDiv'), {
+        theme: 'outline', size: 'large'
+      }
+      )
     }
-    )
-  }, [])
+  }, [window.google])
   const handleGoogleCallbackResponse = (response) => {
     const decodedToken = jwtDecode(response.credential);
     dispatch(loginUserRedux(decodedToken));
