@@ -6,7 +6,6 @@ import { deleteDish } from "../../../repository/dishHandler";
 import AdminEditDishModal from "../AdminEditDishModal/AdminEditDishModal";
 import AdminEditDishImageModal from "../AdminEditDishImageModal/AdminEditDishImageModal";
 
-
 const AdminDishCard = (props) => {
     const dishId = props.dishId;
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
