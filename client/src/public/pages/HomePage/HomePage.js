@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUserRedux } from "../../../../../redux/slices/userSlice";
+import { logoutUserRedux } from "../../../redux/slices/userSlice";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const HomePage = () => {
                 </>
                 :
                 <>
-                    <div id='googleSignInDiv'></div>
+                    <div id='googleSignInDiv2'></div>
                 </>
             }
         </div>
