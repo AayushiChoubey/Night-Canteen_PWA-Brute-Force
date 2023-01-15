@@ -62,8 +62,6 @@ router.post('/delete', async (req, res) => {
     try {
         const dishId = req.body['dishId'];
         // find and delete doc from firestore have field dishId
-
-
         const q = query(collection(db, 'dishes'), where("dishId", "==", dishId));
         const querySnapshot = await getDocs(q);
         const requiredDocRef = querySnapshot.docs[0].ref;

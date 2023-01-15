@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { db } = require('../firebaseConfig');
-const { collection, getDocs, addDoc } = require("firebase/firestore");
+const { collection, getDocs, addDoc, updateDoc, query, where } = require("firebase/firestore");
 const crypto = require('crypto');
 const uuid = require('uuid');
 
@@ -37,6 +37,13 @@ router.post('/createPaymentOrder', async (req, res) => {
                     console.log(err);
                     res.status(500).json({ "message": "Internal server error! Please try again later." });
                 } else {
+                    console.log(order);
+                    // add doc to orders collection
+                    const data = {};
+                    data['orderId'] = order['id'];
+                    data['orderToken'] = Math.floor(1000 + Math.random() * 9000);
+                    data['orderStatus'] = '0';
+                    await addDoc(collection(db, "orders"), data);
                     res.status(200).json({ order, paymentKey: process.env.RAZORPAY_KEY_ID });
                 }
             });
@@ -64,14 +71,14 @@ router.post('/verifySubscriptionPayment', async (req, res) => {
             .digest('hex');
 
         if (expectedSign === razorpay_signature) {
-            // add doc to orders collection
+            // update order status
+            const q = query(collection(db, 'orders'), where("orderId", "==", razorpay_order_id));
+            const querySnapshot = await getDocs(q);
+            const requiredDocRef = querySnapshot.docs[0].ref;
+
             const data = {};
-            data['orderId'] = uuid.v4();
-            const randomNumber = Math.floor(1000 + Math.random() * 9000);
-            console.log(randomNumber);
-            data['orderToken'] = randomNumber;
-            data['orderStatus'] = '0';
-            await addDoc(collection(db, "orders"), data);
+            data['orderStatus'] = '1';
+            await updateDoc(requiredDocRef, data);
             res.status(200).json({ "message": "Payment successful!" });
         } else {
             res.status(401).json({ "message": "Payment failed!" });
