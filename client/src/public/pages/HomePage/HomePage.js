@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import HomeDishCard from "../../components/HomeDishCard/HomeDishCard";
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import PublicOrderCard from "../../components/PublicOrderCard/PublicOrderCard";
+import PublicDishCard from "../../components/PublicDishCard/PublicDishCard";
 
 const HomePage = () => {
 
@@ -12,6 +12,7 @@ const HomePage = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
     const [userOrders, setUserOrders] = useState([]);
+
     useEffect(()=> {
         if (user && orders) {
             const requiredOrders = orders.filter((element)=> element['userId'] === user['userId'])
@@ -26,9 +27,11 @@ const HomePage = () => {
 
     const [searchText, setSearchText] = useState('');
     const [filteredDishes, setFilteredDishes] = useState([]);
+
     useEffect(() => {
         setFilteredDishes(dishes);
     }, [dishes]);
+
     const handleClickSearchButton = () => {
         let requiredDishes = [];
         if (searchText === '') {
@@ -100,21 +103,47 @@ const HomePage = () => {
                 </div>
             </div>}
 
-            <input type="text" placeholder="Search" value={searchText}
+            {/* <input type="text" placeholder="Search" value={searchText}
                 onChange={(e) => {
                     setSearchText(e.target.value);
                 }}
             />
-            <button onClick={handleClickSearchButton}>Search</button>
+            <button onClick={handleClickSearchButton}>Search</button> */}
+
             {/* menu section */}
             <div>
-                <h1
+                <h1 className="text-center mt-3">
+                    Menu
+                </h1>
+                <hr style={{
+                    margin: 'auto',
+                    width: "50px",
+                    border: "3px solid #FFC107"
+                }} />
+
+                {/* Search in Menu */}
+
+                <div className="input-group my-3 m-auto" style={{width:'85%', borderRadius:'50px', border:'2px solid rgba(255, 193, 7, 0.5)'}}>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Search Dish Item" 
+                        style={{border:'none', borderRadius:"50px"}}
+                        value={searchText}
+                        onChange={(e) => {
+                            setSearchText(e.target.value);
+                        }}
+                    >
+                    </input>
+                    <Button variant="warning" style={{borderRadius:'50px', width:"60px", margin:'4px 6px 4px 0px'}} onClick={handleClickSearchButton}><i className="fa-solid fa-magnifying-glass"></i></Button>
+                </div>
+                {/* <h1
                     className="display-1 text-decoration-underline text-center"
                 >
                     Menu
-                </h1>
+                </h1> */}
 
-                <div
+                {/* <div
                     className="d-flex flex-wrap"
                 >
                     {filteredDishes && filteredDishes.map((dish) => {
@@ -126,7 +155,19 @@ const HomePage = () => {
                         )
                     })
                     }
-                </div>
+                </div> */}
+
+                {/* Menu items */}
+                <Card className="m-auto mt-4" style={{ width: "85%", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
+                    <Card.Body>
+                        {filteredDishes && filteredDishes.map((dish) =>
+                            <PublicDishCard
+                                key={dish['dishId']}
+                                dishId={dish['dishId']}
+                            />
+                        )}
+                    </Card.Body>
+                </Card>
             </div>
 
             <Button
