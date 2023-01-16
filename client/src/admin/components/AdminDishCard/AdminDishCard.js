@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faImage, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,8 @@ import AdminEditDishModal from "../AdminEditDishModal/AdminEditDishModal";
 import AdminEditDishImageModal from "../AdminEditDishImageModal/AdminEditDishImageModal";
 
 const AdminDishCard = (props) => {
+    const user = useSelector((state) => state.user ? state.user.value : null);
+
     const dishId = props.dishId;
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const [dish, setDish] = useState(null);
@@ -15,10 +17,11 @@ const AdminDishCard = (props) => {
         setDish(requiredDish);
     }, [dishId]);
 
-    const handleClickDeleteIcon = () => {
+    const handleClickDeleteIcon = async () => {
         const response = window.confirm('Do you really want to delete this dish?');
         if (response) {
-            deleteDish(dishId);
+            await deleteDish(dishId, user['token']);
+            alert('Dish deleted successfully!');
         }
     }
 

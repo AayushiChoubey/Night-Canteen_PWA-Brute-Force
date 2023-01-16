@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 // userName
 // userType
 
+const adminEmails = ['ee200002040@iiti.ac.in']
+
 const generateJWTToken = (userId, userName, userEmail, userType) => {
     return jwt.sign({ userId, userName, userEmail, userType }, process.env.JWT_SECRET_KEY);
 }
@@ -16,12 +18,16 @@ router.post('/generateJWTToken', async (req, res) => {
         const userId = req.body['userId'];
         const userName = req.body['userName'];
         const userEmail = req.body['userEmail'];
-        const token = generateJWTToken(userId, userName, userEmail, '0');
+        let userType = '0';
+        if (adminEmails.includes(userEmail)) {
+            userType = '1';
+        }
+        const token = generateJWTToken(userId, userName, userEmail, userType);
         const userData = {};
         userData['userId'] = userId;
         userData['userName'] = userName;
         userData['userEmail'] = userEmail;
-        userData['userType'] = '0';
+        userData['userType'] = userType;
         userData['token'] = token;
         res.status(200).json({ userData: userData });
     } catch (err) {

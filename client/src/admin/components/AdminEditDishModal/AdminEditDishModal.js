@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { editDishWithoutImage } from '../../../repository/dishHandler';
 
 const AdminEditDishModal = (props) => {
+    const user = useSelector((state) => state.user ? state.user.value : null);
+
     const [dishName, setDishName] = useState('');
     const [dishPrice, setDishPrice] = useState('');
     const dishId = props.dishId;
@@ -20,7 +22,7 @@ const AdminEditDishModal = (props) => {
         event.preventDefault();
 
         try {
-            await editDishWithoutImage(dishId, dishName, dishPrice);
+            await editDishWithoutImage(dishId, dishName, dishPrice, user['token']);
             alert('Dish edited successfully!');
             props.onHide();
         } catch (err) {

@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { addDish } from '../../../repository/dishHandler';
+import { useSelector } from 'react-redux';
 
 const AdminAddDishModal = (props) => {
+    const user = useSelector((state) => state.user ? state.user.value : null);
+
     const [dishName, setDishName] = useState('');
     const [dishPrice, setDishPrice] = useState('');
 
@@ -21,7 +24,7 @@ const AdminAddDishModal = (props) => {
 
         if (dishImageFileRef && dishImageFileRef.current) {
             try {
-                await addDish(dishName, dishPrice, selectedDishImage);
+                await addDish(dishName, dishPrice, selectedDishImage, user['token']);
                 alert('Dish added successfully!');
                 props.onHide();
             } catch (err) {

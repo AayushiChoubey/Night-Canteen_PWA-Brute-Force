@@ -1,8 +1,11 @@
 import { Modal, Button } from "react-bootstrap";
 import { useState, useRef } from "react";
 import { editDishImage } from "../../../repository/dishHandler";
+import { useSelector } from "react-redux";
 
 const AdminEditDishImageModal = (props) => {
+    const user = useSelector((state) => state.user ? state.user.value : null);
+
     const dishImageFileRef = useRef();
     const [selectedDishImage, setSelectedDishImage] = useState(null);
     const handleChangeDishImageFile = (event) => {
@@ -21,7 +24,7 @@ const AdminEditDishImageModal = (props) => {
     const dishId = props.dishId;
     const handleClickCofirmButton = async () => {
         try {
-            await editDishImage(dishId, selectedDishImage);
+            await editDishImage(dishId, selectedDishImage, user['token']);
             alert('Dish image edited successfully!');
             props.onHide();
         } catch (err) {

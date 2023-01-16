@@ -10,39 +10,55 @@ const readImageAsBase64 = (image) => {
     });
 }
 
-export const addDish = async (dishName, dishPrice, dishImage) => {
+export const addDish = async (dishName, dishPrice, dishImage, userToken) => {
     const data = {};
     data['dishName'] = dishName;
     data['dishPrice'] = dishPrice;
     data['dishImage'] = await readImageAsBase64(dishImage);
 
-    return axios.post(`${process.env.REACT_APP_API_URL}/dish/add`, data);
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/add`, data, {
+        headers: {
+            "Authorization": `Bearer ${userToken}`
+        }
+    });
 }
 
 export const getAllDishes = () => {
     return axios.get(`${process.env.REACT_APP_API_URL}/dish/getAll`);
 }
 
-export const deleteDish = (dishId) => {
+export const deleteDish = (dishId, userToken) => {
     const data = {};
     data['dishId'] = dishId;
 
-    return axios.post(`${process.env.REACT_APP_API_URL}/dish/delete`, data);
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/delete`, data, {
+        headers: {
+            "Authorization": `Bearer ${userToken}`
+        }
+    });
 }
 
-export const editDishWithoutImage = (dishId, dishName, dishPrice) => {
+export const editDishWithoutImage = (dishId, dishName, dishPrice, userToken) => {
     const data = {};
     data['dishId'] = dishId;
     data['dishName'] = dishName;
     data['dishPrice'] = dishPrice;
 
-    return axios.post(`${process.env.REACT_APP_API_URL}/dish/editWithoutImage`, data);
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/editWithoutImage`, data, {
+        headers: {
+            "Authorization": `Bearer ${userToken}`
+        }
+    });
 }
 
-export const editDishImage = async (dishId, dishImage) => {
+export const editDishImage = async (dishId, dishImage, userToken) => {
     const data = {};
     data['dishId'] = dishId;
     data['dishImage'] = await readImageAsBase64(dishImage);
 
-    return axios.post(`${process.env.REACT_APP_API_URL}/dish/editImage`, data);
+    return axios.post(`${process.env.REACT_APP_API_URL}/dish/editImage`, data, {
+        headers: {
+            "Authorization": `Bearer ${userToken}`
+        }
+    });
 }

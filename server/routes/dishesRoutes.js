@@ -3,6 +3,7 @@ const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
 const { collection, addDoc, getDocs, deleteDoc, query, where, updateDoc } = require("firebase/firestore");
+const { checkAdmin } = require('../middleware');
 
 // dishModel
 // dishId
@@ -10,7 +11,7 @@ const { collection, addDoc, getDocs, deleteDoc, query, where, updateDoc } = requ
 // dishPrice
 // dishImage
 
-router.post('/add', async (req, res) => {
+router.post('/add', [checkAdmin], async (req, res) => {
     try {
         const data = {};
         data['dishId'] = uuid.v4();
@@ -58,7 +59,7 @@ router.get('/getAll', async (req, res) => {
     }
 })
 
-router.post('/delete', async (req, res) => {
+router.post('/delete', [checkAdmin], async (req, res) => {
     try {
         const dishId = req.body['dishId'];
         // find and delete doc from firestore have field dishId
@@ -78,7 +79,7 @@ router.post('/delete', async (req, res) => {
     }
 })
 
-router.post('/editWithoutImage', async (req, res) => {
+router.post('/editWithoutImage', [checkAdmin], async (req, res) => {
     try {
         const data = {};
         data['dishName'] = req.body['dishName'];
@@ -102,7 +103,7 @@ router.post('/editWithoutImage', async (req, res) => {
     }
 });
 
-router.post('/editImage', async (req, res) => {
+router.post('/editImage', [checkAdmin], async (req, res) => {
     try {
         const data = {};
         data['dishImage'] = req.body['dishImage'];
