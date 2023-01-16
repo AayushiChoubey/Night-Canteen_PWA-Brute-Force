@@ -18,3 +18,11 @@ export const verifyPaymentOrder = async (razorpay_payment_id, razorpay_order_id,
 export const getAllOrders = () => {
     return axios.get(`${process.env.REACT_APP_API_URL}/order/getAll`);
 }
+
+export const changeOrderStatus = (orderId, orderStatus) => {
+    const data = {};
+    data['orderId'] = orderId;
+    data['orderStatus'] = orderStatus;
+
+    return axios.post(`${process.env.REACT_APP_API_URL}/order/changeOrderState`, data);
+}

@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { loginUserRedux } from './redux/slices/userSlice';
 import { setDishesRedux } from './redux/slices/dishSlice';
-import { setOrdersRedux, setOrdersSlice } from './redux/slices/orderSlice';
+import { setOrdersRedux } from './redux/slices/orderSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';

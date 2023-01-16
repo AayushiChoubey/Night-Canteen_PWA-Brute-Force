@@ -106,4 +106,20 @@ router.get('/getAll', async (req, res) => {
     }
 });
 
+router.post('/changeOrderState', async (req, res) => {
+    try {
+        const { orderId, orderStatus } = req.body;
+        const q = query(collection(db, 'orders'), where("orderId", "==", orderId));
+        const querySnapshot = await getDocs(q);
+        const requiredDocRef = querySnapshot.docs[0].ref;
+        const data = {};
+        data['orderStatus'] = orderStatus;
+        await updateDoc(requiredDocRef, data);
+        res.status(200).json({ "message": "Order status updated!" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ "message": "Internal server error! Please try again later." });
+    }
+})
+
 module.exports = router;
