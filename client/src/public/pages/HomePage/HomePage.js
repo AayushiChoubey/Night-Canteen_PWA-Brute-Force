@@ -68,7 +68,7 @@ const HomePage = () => {
                     className="d-flex flex-wrap"
                 >
                     {orders && orders.map((order) => {
-                        if (order['userId'] === user['userId']) {
+                        if (user && order && order['userId'] === user['userId']) {
                             return (
                                 <HomeDishCard
                                     key={order['orderId']}
