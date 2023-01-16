@@ -73,7 +73,6 @@ const App = () => {
       });
   }, []);
   const orders = useSelector((state) => state.orders ? state.orders.value : null);
-  console.log(orders);
 
   return (
     <Routes>

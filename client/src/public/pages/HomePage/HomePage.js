@@ -3,12 +3,14 @@ import { logoutUserRedux } from "../../../redux/slices/userSlice";
 import HomeDishCard from "../../components/HomeDishCard/HomeDishCard";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
 const HomePage = () => {
     const dispatch = useDispatch();
 
     const user = useSelector((state) => state.user ? state.user.value : null);
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
+    const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
     const handleSignOutClick = () => {
         dispatch(logoutUserRedux());
@@ -17,6 +19,24 @@ const HomePage = () => {
     const navigator = useNavigate();
     const handleCartClick = () => {
         navigator('/cart');
+    }
+
+    const [searchText, setSearchText] = useState('');
+    const [filteredDishes, setFilteredDishes] = useState([]);
+    useEffect(() => {
+        setFilteredDishes(dishes);
+    }, [dishes]);
+    const handleClickSearchButton = () => {
+        let requiredDishes = [];
+        if (searchText === '') {
+            requiredDishes = dishes;
+        } else {
+            const filteredDishes = dishes.filter((dish) => {
+                return dish['dishName'].toLowerCase().includes(searchText.toLowerCase());
+            })
+            requiredDishes = filteredDishes;
+        }
+        setFilteredDishes(requiredDishes);
     }
 
     return (
@@ -36,6 +56,41 @@ const HomePage = () => {
                 }
             </div>
 
+            {/* my order section */}
+            <div>
+                <h1
+                    className="display-1 text-decoration-underline text-center"
+                >
+                    My Order
+                </h1>
+
+                <div
+                    className="d-flex flex-wrap"
+                >
+                    {orders && orders.map((order) => {
+                        if (order['userId'] === user['userId']) {
+                            return (
+                                <HomeDishCard
+                                    key={order['orderId']}
+                                    dishId={order['orderId']}
+                                />
+                            )
+                        } else {
+                            return (
+                                <></>
+                            )
+                        }
+                    })
+                    }
+                </div>
+            </div>
+
+            <input type="text" placeholder="Search" value={searchText}
+                onChange={(e) => {
+                    setSearchText(e.target.value);
+                }}
+            />
+            <button onClick={handleClickSearchButton}>Search</button>
             {/* menu section */}
             <div>
                 <h1
@@ -47,7 +102,7 @@ const HomePage = () => {
                 <div
                     className="d-flex flex-wrap"
                 >
-                    {dishes && dishes.map((dish) => {
+                    {filteredDishes && filteredDishes.map((dish) => {
                         return (
                             <HomeDishCard
                                 key={dish['dishId']}
