@@ -17,8 +17,8 @@ function PublicOrderCard(props) {
     }, [orderId]);
 
     return (
-        <Card className="mx-auto mt-4" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
-            <Card.Body className='align-items-stretch'>
+        <Card className="mx-auto mt-4" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)"}}>
+            <Card.Body style={{display:'flex', flexDirection:'column', justifyContent:'space-around' }}>
                 <h4 className="text-danger text-center">Order#{order && order.orderToken}</h4>
                 <Row className='align-items-center'>
                     <Col className='col-8'>
