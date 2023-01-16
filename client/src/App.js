@@ -1,23 +1,27 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
+
 import { loginUserRedux } from './redux/slices/userSlice';
 import { setDishesRedux } from './redux/slices/dishSlice';
 import { setOrdersRedux } from './redux/slices/orderSlice';
-import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
-import HomePage from './public/pages/HomePage/HomePage';
-import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
-import { useSelector } from 'react-redux';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
-import CartPage from './public/pages/CartPage/CartPage';
 import { getAllOrders } from './repository/orderHandler';
 import { generateJWTToken } from './repository/userHandler';
 
+import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
+import HomePage from './public/pages/HomePage/HomePage';
+import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
+import CartPage from './public/pages/CartPage/CartPage';
+import NavbarComponent from './public/components/NavbarComponent/NavbarComponent';
+import LoginPage from './public/pages/LoginPage/LoginPage';
+
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // user authentication
   useEffect(() => {
@@ -35,6 +39,7 @@ const App = () => {
       )
     }
   }, [window.google])
+
   const handleGoogleCallbackResponse = async (response) => {
     const decodedToken = jwtDecode(response.credential);
     try {
@@ -43,7 +48,9 @@ const App = () => {
       const userEmail = decodedToken['email'];
       const response = await generateJWTToken(userId, userName, userEmail);
       const userData = response.data['userData'];
+      document.body.style.backgroundColor = '#fff';
       dispatch(loginUserRedux(userData));
+      navigate('/')
     } catch (err) {
       console.log(err);
     }
@@ -75,15 +82,19 @@ const App = () => {
   const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
   return (
-    <Routes>
-      {/* public routes */}
-      <Route path='/' element={<HomePage />} />
-      <Route path='/cart' element={<CartPage />} />
+    <>
+      <NavbarComponent />
+      <Routes>
+        {/* public routes */}
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/cart' element={<CartPage />} />
 
-      {/* admin routes */}
-      <Route path='/admin/dashboard' element={<AdminDashboard />} />
-      <Route path='/admin/edit' element={<AdminEditPage />} />
-    </Routes>
+        {/* admin routes */}
+        <Route path='/admin/dashboard' element={<AdminDashboard />} />
+        <Route path='/admin/edit' element={<AdminEditPage />} />
+      </Routes>
+    </>
   );
 }
 
