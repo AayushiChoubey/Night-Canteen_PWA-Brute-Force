@@ -18,10 +18,13 @@ import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
 import CartPage from './public/pages/CartPage/CartPage';
 import NavbarComponent from './public/components/NavbarComponent/NavbarComponent';
 import LoginPage from './public/pages/LoginPage/LoginPage';
+import ErrorPage from './public/pages/ErrorPage/ErrorPage';
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const user = useSelector((state) => state.user ? state.user.value : null);
 
   // user authentication
   useEffect(() => {
@@ -48,9 +51,11 @@ const App = () => {
       const userEmail = decodedToken['email'];
       const response = await generateJWTToken(userId, userName, userEmail);
       const userData = response.data['userData'];
-      document.body.style.backgroundColor = '#fff';
       dispatch(loginUserRedux(userData));
-      navigate('/')
+
+      if (user.userType === '0') navigate('/');
+      else navigate('/admin/dashboard');
+      document.body.style.backgroundColor = '#fff';
     } catch (err) {
       console.log(err);
     }
@@ -87,12 +92,14 @@ const App = () => {
       <Routes>
         {/* public routes */}
         <Route path='/' element={<HomePage />} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/cart' element={<CartPage />} />
+        <Route path='/*' element={<ErrorPage mssg="Page Not Found" code="404" />} />
 
         {/* admin routes */}
-        <Route path='/admin/dashboard' element={<AdminDashboard />} />
-        <Route path='/admin/edit' element={<AdminEditPage />} />
+        <Route exact path='/admin/dashboard' element={user.userType === '1' ? <AdminDashboard /> : <ErrorPage mssg="Unauthorized" code="401" />} />
+        <Route exact path='/admin/edit' element={user.userType === '1' ? <AdminEditPage /> : <ErrorPage mssg="Unauthorized" code="401" />} />
       </Routes>
     </>
   );
