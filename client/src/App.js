@@ -8,6 +8,7 @@ import { setOrdersRedux } from './redux/slices/orderSlice';
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
 import AdminEditPage from './admin/pages/AdminEditPage/AdminEditPage';
+import { useSelector } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
@@ -71,6 +72,8 @@ const App = () => {
         console.log(err);
       });
   }, []);
+  const orders = useSelector((state) => state.orders ? state.orders.value : null);
+  console.log(orders);
 
   return (
     <Routes>

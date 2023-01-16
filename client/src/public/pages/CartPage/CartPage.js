@@ -4,6 +4,7 @@ import { createPaymentOrder, verifyPaymentOrder } from "../../../repository/orde
 import CartDishCard from "../../components/CartDishCard/CartDishCard";
 
 const CartPage = () => {
+    const user = useSelector((state) => state.user ? state.user.value : null);
     const cart = useSelector((state) => state.cart ? state.cart.value : null);
 
     const initPayment = (orderData, paymentKey) => {
@@ -32,7 +33,7 @@ const CartPage = () => {
 
     const handleClickPayButton = async () => {
         try {
-            createPaymentOrder(cart).then((response) => {
+            createPaymentOrder(cart, user['userId']).then((response) => {
                 initPayment(response.data.order, response.data.paymentKey);
             }).catch((err) => console.log(err));
         } catch (err) {

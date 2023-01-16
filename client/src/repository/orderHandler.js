@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const createPaymentOrder = async (orderedDishes) => {
+export const createPaymentOrder = async (orderedDishes, userId) => {
     const data = {};
     data['orderedDishes'] = orderedDishes;
+    data['userId'] = userId;
 
     return axios.post(`${process.env.REACT_APP_API_URL}/order/createPaymentOrder`, data);
 }

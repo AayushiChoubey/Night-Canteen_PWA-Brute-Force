@@ -14,6 +14,7 @@ const uuid = require('uuid');
 router.post('/createPaymentOrder', async (req, res) => {
     try {
         const orderedDishes = req.body['orderedDishes'];
+        const userId = req.body['userId'];
 
         const snapshot = await getDocs(collection(db, "dishes"));
         let totalAmount = 0;
@@ -37,12 +38,13 @@ router.post('/createPaymentOrder', async (req, res) => {
                     console.log(err);
                     res.status(500).json({ "message": "Internal server error! Please try again later." });
                 } else {
-                    console.log(order);
                     // add doc to orders collection
                     const data = {};
                     data['orderId'] = order['id'];
                     data['orderToken'] = Math.floor(1000 + Math.random() * 9000);
                     data['orderStatus'] = '0';
+                    data['orderDishes'] = orderedDishes;
+                    data['userId'] = userId;
                     await addDoc(collection(db, "orders"), data);
                     res.status(200).json({ order, paymentKey: process.env.RAZORPAY_KEY_ID });
                 }
@@ -91,9 +93,10 @@ router.post('/verifySubscriptionPayment', async (req, res) => {
 
 router.get('/getAll', async (req, res) => {
     try {
-        const snapshot = await getDocs(collection(db, "orders"));
+        const q = query(collection(db, 'orders'), where("orderStatus", ">=", '1'));
+        const querySnapshot = await getDocs(q);
         const data = [];
-        snapshot.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
             data.push(doc.data());
         });
 
