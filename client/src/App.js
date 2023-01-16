@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { getAllDishes } from './repository/dishHandler';
 import CartPage from './public/pages/CartPage/CartPage';
 import { getAllOrders } from './repository/orderHandler';
+import { generateJWTToken } from './repository/userHandler';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,18 @@ const App = () => {
       )
     }
   }, [window.google])
-  const handleGoogleCallbackResponse = (response) => {
+  const handleGoogleCallbackResponse = async (response) => {
     const decodedToken = jwtDecode(response.credential);
-    dispatch(loginUserRedux(decodedToken));
+    try {
+      const userId = decodedToken['jti'];
+      const userName = decodedToken['name'];
+      const userEmail = decodedToken['email'];
+      const response = await generateJWTToken(userId, userName, userEmail);
+      const userData = response.data['userData'];
+      dispatch(loginUserRedux(userData));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // get all dishes

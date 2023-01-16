@@ -18,6 +18,8 @@ const dishRoutes = require('./routes/dishesRoutes');
 app.use("/dish", dishRoutes);
 const orderRoutes = require('./routes/orderRoutes');
 app.use("/order", orderRoutes);
+const userRoutes = require('./routes/userRoutes');
+app.use("/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
