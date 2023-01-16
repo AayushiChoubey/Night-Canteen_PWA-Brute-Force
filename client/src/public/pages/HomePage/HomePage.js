@@ -1,20 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUserRedux } from "../../../redux/slices/userSlice";
+import { useSelector } from "react-redux";
 import HomeDishCard from "../../components/HomeDishCard/HomeDishCard";
 import { useNavigate } from 'react-router-dom';
-import { Button } from "react-bootstrap";
+import { Button, Card, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import PublicOrderCard from "../../components/PublicOrderCard/PublicOrderCard";
 
 const HomePage = () => {
-    const dispatch = useDispatch();
 
     const user = useSelector((state) => state.user ? state.user.value : null);
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
-    const handleSignOutClick = () => {
-        dispatch(logoutUserRedux());
-    }
+    const [userOrders, setUserOrders] = useState([]);
+    useEffect(()=> {
+        if (user && orders) {
+            const requiredOrders = orders.filter((element)=> element['userId'] === user['userId'])
+            setUserOrders(requiredOrders);
+        }
+    }, [user, orders]);
 
     const navigator = useNavigate();
     const handleCartClick = () => {
@@ -41,38 +44,50 @@ const HomePage = () => {
 
     return (
         <div>
-            {/* navbar */}
-            <div
-                className="d-flex justify-content-end"
-            >
-                {user ?
-                    <>
-                        <button onClick={handleSignOutClick}>Sign Out</button>
-                    </>
-                    :
-                    <>
-                        <div id='googleSignInDiv'></div>
-                    </>
-                }
-            </div>
+
+            {/* Dashboard Section */}
+            <Card text='white' className="m-auto my-4 bg-info" style={{
+                width: "85%",
+                border: "none",
+                boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)",
+                backgroundColor: "#FFC107"
+            }}>
+                <Card.Body>
+                    <h2 className="text-center display-5 mt-2 mb-4">Dashboard</h2>
+                    <Row>
+                        <Col className="text-center" style={{ width: "50%" }}>
+                            <h5>Current Order</h5>
+                            <h1 className="display-1" style={{ fontFamily: "'Orbitron', sans-serif" }}>091</h1>
+                        </Col>
+                        <Col className="text-center" style={{ width: "50%" }}>
+                            <h5>Your Order</h5>
+                            <h1 className="display-1" style={{ fontFamily: "'Orbitron', sans-serif" }}>109</h1>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
 
             {/* my order section */}
-            <div>
-                <h1
-                    className="display-1 text-decoration-underline text-center"
-                >
-                    My Order
+            {user && userOrders.length > 0 && <div>
+                <h1 className="text-center mt-3">
+                    Your Orders
                 </h1>
+                <hr style={{
+                    margin: 'auto',
+                    width: "50px",
+                    border: "3px solid #FFC107"
+                }} />
 
                 <div
-                    className="d-flex flex-wrap"
+                    className="d-flex flex-wrap m-auto"
+                    style={{width:"85%"}}
                 >
                     {orders && orders.map((order) => {
                         if (user && order && order['userId'] === user['userId']) {
                             return (
-                                <HomeDishCard
+                                <PublicOrderCard
                                     key={order['orderId']}
-                                    dishId={order['orderId']}
+                                    orderId={order['orderId']}
                                 />
                             )
                         } else {
@@ -83,7 +98,7 @@ const HomePage = () => {
                     })
                     }
                 </div>
-            </div>
+            </div>}
 
             <input type="text" placeholder="Search" value={searchText}
                 onChange={(e) => {

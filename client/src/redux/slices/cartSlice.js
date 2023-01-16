@@ -43,10 +43,13 @@ export const cartSlice = createSlice({
             }
 
             state.value = tempDishes;
+        },
+        clearCartRedux: (state, action) => {
+            state.value = [];
         }
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { addDishCartRedux, reduceDishCartRedux, removeDishCartRedux } = cartSlice.actions;
+export const { addDishCartRedux, reduceDishCartRedux, removeDishCartRedux, clearCartRedux } = cartSlice.actions;
 export default cartSlice.reducer;

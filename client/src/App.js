@@ -53,7 +53,7 @@ const App = () => {
       const userData = response.data['userData'];
       dispatch(loginUserRedux(userData));
 
-      if (user.userType === '0') navigate('/');
+      if (userData.userType === '0') navigate('/');
       else navigate('/admin/dashboard');
       document.body.style.backgroundColor = '#fff';
     } catch (err) {
@@ -98,8 +98,8 @@ const App = () => {
         <Route path='/*' element={<ErrorPage mssg="Page Not Found" code="404" />} />
 
         {/* admin routes */}
-        <Route exact path='/admin/dashboard' element={user.userType === '1' ? <AdminDashboard /> : <ErrorPage mssg="Unauthorized" code="401" />} />
-        <Route exact path='/admin/edit' element={user.userType === '1' ? <AdminEditPage /> : <ErrorPage mssg="Unauthorized" code="401" />} />
+        <Route exact path='/admin/dashboard' element={user && user.userType === '1' ? <AdminDashboard /> : <ErrorPage mssg="Unauthorized" code="401" />} />
+        <Route exact path='/admin/edit' element={user && user.userType === '1' ? <AdminEditPage /> : <ErrorPage mssg="Unauthorized" code="401" />} />
       </Routes>
     </>
   );
