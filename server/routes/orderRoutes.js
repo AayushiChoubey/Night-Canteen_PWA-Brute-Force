@@ -45,6 +45,7 @@ router.post('/createPaymentOrder', async (req, res) => {
                     data['orderStatus'] = '0';
                     data['orderDishes'] = orderedDishes;
                     data['userId'] = userId;
+                    data['orderTime'] = Date();
                     await addDoc(collection(db, "orders"), data);
                     res.status(200).json({ order, paymentKey: process.env.RAZORPAY_KEY_ID });
                 }

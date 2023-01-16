@@ -8,12 +8,14 @@ function PublicOrderCard(props) {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const [order, setOrder] = useState(null);
-    const status = ['Unpayed','Preparing','Order Ready','Order Delivered'];
+    const [orderDate, setOrderDate] = useState(null);
+    const status = ['Unpaid','Preparing','Order Ready','Order Delivered'];
     const variant = ['primary','primary','warning','success']
 
     useEffect(() => {
         const requiredOrder = orders.find((element) => element['orderId'] === orderId);
         setOrder(requiredOrder);
+        setOrderDate(new Date(requiredOrder.orderTime));
     }, [orderId]);
 
     return (
@@ -28,10 +30,11 @@ function PublicOrderCard(props) {
                         <h5>Quantity</h5>
                     </Col>
                 </Row>
-                        {order && order.orderDishes && order.orderDishes.map((dish) => {
+                        {order && order.orderDishes && order.orderDishes.map((dish) => {                   
+                            // console.log(order);
                             const requiredDish = dishes.find((element) => element['dishId'] === dish.dishId)
                             return (
-                                <Row className='align-items-center mb-2'>
+                                <Row key={dish.dishId} className='align-items-center mb-2'>
                                     <Col className='col-8'>
                                         <p className="m-0">
                                             {requiredDish && requiredDish.dishName}
@@ -51,7 +54,8 @@ function PublicOrderCard(props) {
                         <Badge pill className={`h-100 bg-${variant[order.orderStatus]}`} style={{ width: '120px' }}>{status[order.orderStatus]}</Badge>
                     </Col>
                     <Col className="text-end text-muted">
-                        16/01/23 17:52
+                        {/* 16/01/23 17:52 */}
+                        {orderDate && `${orderDate.getDate()}/${orderDate.getMonth()+1}/${orderDate.getFullYear()}  ${orderDate.getHours()}:${orderDate.getMinutes()}`}
                     </Col>
                 </Row>}
             </Card.Body>
