@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // userName
 // userType
 
-const adminEmails = ['ee200002040@iiti.ac.in', 'ce200004001@iiti.ac.in']
+const adminEmails = ['ee200002040@iiti.ac.in', 'ce200004001@iiti.ac.in', 'cse200001057@iiti.ac.in', 'ee200002001@iiti.ac.in']
 
 const generateJWTToken = (userId, userName, userEmail, userType) => {
     return jwt.sign({ userId, userName, userEmail, userType }, process.env.JWT_SECRET_KEY);
