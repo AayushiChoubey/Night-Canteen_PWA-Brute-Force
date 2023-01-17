@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminDashboardOrderCard from '../../components/AdminDashboardOrderCard/AdminDashboardOrderCard';
 import { Card } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 
 const AdminDashboard = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
