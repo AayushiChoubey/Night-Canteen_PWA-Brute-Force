@@ -44,11 +44,9 @@ const AdminDishCard = (props) => {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">
-
-                {/* TO-DO */}
-                {/* change success with logic of veg nonveg in to success - danger */}
+                
                 <div className="d-flex align-items-center">
-                    <i className="fa-regular fa-circle-stop text-success me-1"></i>
+                    <i className={`fa-regular fa-circle-stop ${dish && dish['dishIsNonVeg'] ? 'text-danger' : 'text-success'} me-1`}></i>
                     <div className="text-center" style={{ fontSize: '12px' }}>
                         <img
                             // ToDo: write logic to show dish image if available else show default image

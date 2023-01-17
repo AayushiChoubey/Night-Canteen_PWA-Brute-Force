@@ -67,6 +67,22 @@ const AdminAddDishModal = (props) => {
                         />
                     </Form.Group>
 
+                    <Form.Group className="d-flex justify-content-between mb-3">
+                    <Form.Check
+                        type='switch'
+                        id='dishIsNonVeg'
+                        label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
+                        style={{ color: dishIsNonVeg ? 'red' : 'green' }}
+                        onChange={(event) => setDishIsNonVeg(event.target.checked)}
+                    />
+                    
+                    <Form.Check
+                        type='switch'
+                        id='dishIsAvailable'
+                        label='Is Dish Available?'
+                        onChange={(event) => setDishIsAvailable(event.target.checked)}
+                    />
+                    </Form.Group>
                     <>
                         <input
                             className="d-none" required
@@ -87,19 +103,6 @@ const AdminAddDishModal = (props) => {
                             </button>
                         </div>
                     </>
-
-                    <Form.Check
-                        type='switch'
-                        id='dishIsNonVeg'
-                        label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
-                        onChange={(event) => setDishIsNonVeg(event.target.checked)}
-                    />
-                    <Form.Check
-                        type='switch'
-                        id='dishIsAvailable'
-                        label='Is Dish Available?'
-                        onChange={(event) => setDishIsAvailable(event.target.checked)}
-                    />
                 </Modal.Body>
 
                 {/* footer */}
@@ -117,3 +120,4 @@ const AdminAddDishModal = (props) => {
 }
 
 export default AdminAddDishModal;
+
