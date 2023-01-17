@@ -79,7 +79,10 @@ const CartPage = () => {
             </Card>
 
             {/* payment button */}
-            <Container className="text-center my-4">
+            <Container className="d-flex justify-content-between my-4">
+                <Button variant="secondary">
+                    <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>Add More Dishes</Link>
+                </Button>
                 <Button
                     onClick={handleClickPayButton}
                     variant='warning'

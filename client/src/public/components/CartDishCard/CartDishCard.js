@@ -35,6 +35,10 @@ const CartDishCard = (props) => {
 
     return (
         <div className="d-flex justify-content-between align-items-center mb-3">
+            {/* TO-DO */}
+            {/* change success with logic of veg nonveg in to success - danger */}
+            <i className="fa-regular fa-circle-stop text-success"></i>
+            
             <div className="text-center" style={{fontSize:'12px'}}>
                 {/* <img src="/assets/images/vectors/addnew.png" style={{ width: "50px" }} alt="" /> */}
                 <img 
