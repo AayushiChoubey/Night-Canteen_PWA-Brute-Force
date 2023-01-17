@@ -31,8 +31,8 @@ const AdminDashboardOrderCard = (props) => {
     }
 
     return (
-        <div>
-            <Card className="mx-auto mt-4 h-100" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
+        <div className='my-4 '>
+            <Card className="mx-auto h-100" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
                 {order && <Badge pill className={`bg-${variant[order.orderStatus]}`} style={{
                     width: '120px',
                     position: 'absolute',

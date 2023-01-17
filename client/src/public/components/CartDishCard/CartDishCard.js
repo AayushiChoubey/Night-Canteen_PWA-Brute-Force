@@ -1,8 +1,6 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDishCartRedux, reduceDishCartRedux, removeDishCartRedux } from "../../../redux/slices/cartSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CartDishCard = (props) => {
     const dishId = props.dishId;
