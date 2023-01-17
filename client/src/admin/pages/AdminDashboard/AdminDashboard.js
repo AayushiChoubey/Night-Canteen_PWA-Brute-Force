@@ -1,10 +1,39 @@
 
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminDashboardOrderCard from '../../components/AdminDashboardOrderCard/AdminDashboardOrderCard';
 import { Card } from 'react-bootstrap';
 
 const AdminDashboard = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
+    const [dateAndTime, setDateAndTime] = useState('');
+    const getLiveDateAndTime = () => {
+        const date = new Date();
+        return date.toLocaleString('en-IN');
+    }
+    useEffect(()=> {
+        setInterval(()=> {
+            setDateAndTime(getLiveDateAndTime());
+        }, 1000);
+    }, [])
+
+    const [countDeliveredOrders, setCountDeliveredOrders] = useState(0);
+    const [countPendingOrders, setCountPendingOrders] = useState(0);
+    useEffect(() => {
+        if (orders) {
+            let countDelivered = 0;
+            let countPending = 0;
+            orders.forEach((order) => {
+                if (order['orderStatus'] === '3') {
+                    countDelivered++;
+                } else {
+                    countPending++;
+                }
+            })
+            setCountDeliveredOrders(countDelivered);
+            setCountPendingOrders(countPending);
+        }
+    }, [orders])
 
     return (
         <div className='mb-5'>
@@ -24,14 +53,14 @@ const AdminDashboard = () => {
                 backgroundColor: "#FFC107"
             }}>
                 <Card.Header>
-                    {/* ToDo: Add live Date and Time */}
-                    <h3 className="mb-0 text-center text-dark">Sunday, 15 Jan 11:43 PM</h3>
+                    {/* show live date and time in indian format */}
+                    <h3 className="mb-0 text-center text-dark">{dateAndTime}</h3>
                 </Card.Header>
                 <Card.Body>
                     <h5>Total Orders : {orders ? orders.length : `---`}</h5>
                     {/* ToDo: Change with Logic */}
-                    <h5>Orders Delivered : 24</h5>
-                    <h5>Orders Pending : 28</h5>
+                    <h5>Orders Delivered : {countDeliveredOrders}</h5>
+                    <h5>Orders Pending : {countPendingOrders}</h5>
                 </Card.Body>
             </Card>
 
