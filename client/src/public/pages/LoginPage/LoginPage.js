@@ -7,6 +7,23 @@ function LoginPage() {
         document.body.style.backgroundColor = '#212529';
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    
+    // user authentication
+  useEffect(() => {
+    if (window.google) {
+      // load google from global script
+      window.google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
+        callback: handleGoogleCallbackResponse
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInDiv'), {
+        theme: 'outline', size: 'large'
+      }
+      )
+    }
+  }, [window.google])
 
     return (
         <div>
