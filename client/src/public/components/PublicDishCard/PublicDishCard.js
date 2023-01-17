@@ -34,21 +34,21 @@ const PublicDishCard = (props) => {
 
             {/* TO-DO */}
             {/* change success with logic of veg nonveg in to success - danger */}
-            <i className="fa-regular fa-circle-stop text-success"></i>
-
-
-            <div className="text-center" style={{ fontSize: '12px' }}>
-                <img
-                    // ToDo: write logic to show dish image if available else show default image
-                    // src="/assets/images/vectors/fooditem.png"
-                    src={dish && dish['dishImage']}
-                    alt={dish && dish['dishName']}
-                    style={{ width: "75px" }}
-                />
-                <br />
-                <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
+            <div className="d-flex align-items-center">
+                <i className="fa-regular fa-circle-stop text-success me-1"></i>
+                <div className="text-center" style={{ fontSize: '12px' }}>
+                    <img
+                        // ToDo: write logic to show dish image if available else show default image
+                        // src="/assets/images/vectors/fooditem.png"
+                        src={dish && dish['dishImage']}
+                        alt={dish && dish['dishName']}
+                        style={{ width: "75px" }}
+                    />
+                    <br />
+                    <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
+                </div>
             </div>
-            <h6 className="m-0 text-center" style={{ maxWidth: "40%" }}>
+            <h6 className="m-0 text-center" style={{ flexGrow: '1', maxWidth: "40%" }}>
                 {/* Paneer Bhurji + 2 Paratha with Raita */}
                 {dish && dish.dishName}
             </h6>
