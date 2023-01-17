@@ -38,7 +38,7 @@ const CartDishCard = (props) => {
             {/* TO-DO */}
             {/* change success with logic of veg nonveg in to success - danger */}
             <i className="fa-regular fa-circle-stop text-success"></i>
-            
+
             <div className="text-center" style={{fontSize:'12px'}}>
                 {/* <img src="/assets/images/vectors/addnew.png" style={{ width: "50px" }} alt="" /> */}
                 <img 
@@ -62,38 +62,6 @@ const CartDishCard = (props) => {
                 <i className="fa-solid fa-trash mx-2 text-dark" onClick={handleClickDeleteIcon}/>
             </p>
         </div>
-        // <div
-        //     className="d-flex flex-column justify-content-center align-items-center gap-2 border p-2 rounded"
-        //     style={{
-        //         width: '250px',
-        //         height: '250px',
-        //     }}
-        // >
-        //     {dish &&
-        //         <img
-        //             src={dish['dishImage']}
-        //             alt={dish['dishName']}
-        //             style={{
-        //                 maxWidth: '150px',
-        //                 maxHeight: '150px',
-        //             }}
-        //         />
-        //     }
-
-        //     <div
-        //         className="d-flex justify-content-between gap-5"
-        //     >
-        //         <div
-        //             className="d-flex gap-2"
-        //         >
-        //             <FontAwesomeIcon
-        //                 icon={faTrash}
-        //                 className="btn btn-primary"
-        //                 onClick={handleClickDeleteIcon}
-        //             />
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { clearCartRedux } from "../../../redux/slices/cartSlice";
 import { createPaymentOrder, verifyPaymentOrder } from "../../../repository/orderHandler";
+import BottomNav from "../../components/BottomNav/BottomNav";
 import CartDishCard from "../../components/CartDishCard/CartDishCard";
 
 const CartPage = () => {
@@ -79,7 +80,7 @@ const CartPage = () => {
             </Card>
 
             {/* payment button */}
-            <Container className="d-flex justify-content-between my-4">
+            <div className="d-flex justify-content-between mt-4 mx-auto" style={{width:"85%", marginBottom:'100px'}}>
                 <Button variant="secondary">
                     <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>Add More Dishes</Link>
                 </Button>
@@ -89,7 +90,8 @@ const CartPage = () => {
                 >
                     Pay to Order
                 </Button>
-            </Container>
+            </div>
+            <BottomNav type={'cart'} func={handleClickPayButton}/>
         </div>
     );
 }

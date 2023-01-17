@@ -4,6 +4,7 @@ import { Button, Card, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import PublicOrderCard from "../../components/PublicOrderCard/PublicOrderCard";
 import PublicDishCard from "../../components/PublicDishCard/PublicDishCard";
+import BottomNav from "../../components/BottomNav/BottomNav";
 
 const HomePage = () => {
 
@@ -137,28 +138,9 @@ const HomePage = () => {
                     </input>
                     <Button variant="warning" style={{borderRadius:'50px', width:"60px", margin:'4px 6px 4px 0px'}} onClick={handleClickSearchButton}><i className="fa-solid fa-magnifying-glass"></i></Button>
                 </div>
-                {/* <h1
-                    className="display-1 text-decoration-underline text-center"
-                >
-                    Menu
-                </h1> */}
-
-                {/* <div
-                    className="d-flex flex-wrap"
-                >
-                    {filteredDishes && filteredDishes.map((dish) => {
-                        return (
-                            <HomeDishCard
-                                key={dish['dishId']}
-                                dishId={dish['dishId']}
-                            />
-                        )
-                    })
-                    }
-                </div> */}
 
                 {/* Menu items */}
-                <Card className="m-auto mt-4" style={{ width: "85%", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
+                <Card className="mx-auto mt-4" style={{ width: "85%", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)", marginBottom:"100px" }}>
                     <Card.Body>
                         {filteredDishes && filteredDishes.map((dish) =>
                             <PublicDishCard
@@ -170,11 +152,7 @@ const HomePage = () => {
                 </Card>
             </div>
 
-            <Button
-                onClick={handleCartClick}
-            >
-                Cart
-            </Button>
+            <BottomNav type="home" func={handleCartClick} />
         </div>
     );
 }

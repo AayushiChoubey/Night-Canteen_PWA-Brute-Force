@@ -36,25 +36,27 @@ const PublicDishCard = (props) => {
             {/* change success with logic of veg nonveg in to success - danger */}
             <i className="fa-regular fa-circle-stop text-success"></i>
 
-            
-            <div className="text-center" style={{fontSize:'12px'}}>
-                {/* <img src="/assets/images/vectors/addnew.png" style={{ width: "50px" }} alt="" /> */}
-                <img 
-                    src={dish && dish['dishImage']} 
-                    alt={dish && dish['dishName']} 
-                    style={{ width: "75px" }} />
-                <br/>
+
+            <div className="text-center" style={{ fontSize: '12px' }}>
+                <img
+                    // ToDo: write logic to show dish image if available else show default image
+                    // src="/assets/images/vectors/fooditem.png"
+                    src={dish && dish['dishImage']}
+                    alt={dish && dish['dishName']}
+                    style={{ width: "75px" }}
+                />
+                <br />
                 <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
             </div>
             <h6 className="m-0 text-center" style={{ maxWidth: "40%" }}>
                 {/* Paneer Bhurji + 2 Paratha with Raita */}
                 {dish && dish.dishName}
             </h6>
-            
+
             <p className="m-0">
-                <i className="fa-solid fa-minus mx-2 text-danger" onClick={handleClickMinusIcon}/> 
+                <i className="fa-solid fa-minus mx-2 text-danger" onClick={handleClickMinusIcon} />
                 {orderCount}
-                <i className="fa-solid fa-plus mx-2 text-success" onClick={handleClickPlusIcon}/>
+                <i className="fa-solid fa-plus mx-2 text-success" onClick={handleClickPlusIcon} />
             </p>
         </div>
     );
