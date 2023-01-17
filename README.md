@@ -7,6 +7,7 @@ Let's make memories with midnight Cravings.</i>
 <b>Client</b> : https://night-cravings.netlify.app<br>
 <b>Server</b>: https://night-cravings.onrender.com/dish/getAll<br>
 <br>
+<h3> Video Demonstration</h3>
 
 [![Youtube Thumbnail](https://img.youtube.com/vi/oO6KV-n6GIA/0.jpg)](https://www.youtube.com/watch?v=oO6KV-n6GIA)
 <hr/>
@@ -75,15 +76,15 @@ Admin can set Name, Price, tag(Veg/Non-Veg), Availability, and Image of the dish
 When a user tries to access the web addresses than available ones, then an error page will be directed.<br>
 
 <h3>Technologies Used:</h3>
--React.Js
--Node.Js
--Firebase
--Express.Js
--Router Dom
--Redux
--Razor Pay
--Google OAuth
--Bootstrap 
+-React.Js <br>
+-Node.Js <br>
+-Firebase <br>
+-Express.Js <br>
+-Router Dom <br>
+-Redux <br>
+-Razor Pay <br>
+-Google OAuth <br>
+-Bootstrap  <br>
 
 
 
