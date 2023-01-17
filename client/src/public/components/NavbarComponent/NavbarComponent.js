@@ -41,7 +41,7 @@ function NavbarComponent() {
                                     :
                                     <>
                                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                                        <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
+                                        <Navbar.Collapse id="basic-navbar-nav">
                                             <Nav className="align-items-center text-end">
                                                 <Nav.Link as={NavLink} to="/admin/edit">
                                                     <i className="me-2 fa-solid fa-plus" />Add Dishes
