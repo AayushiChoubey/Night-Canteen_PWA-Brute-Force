@@ -9,6 +9,14 @@ const AdminDashboard = () => {
     return (
         <div>
             {/* Dashboard section */}
+            <h3 className="text-center mt-3">
+                Admin Dashboard
+            </h3>
+            <hr style={{
+                margin: 'auto',
+                width: "150px",
+                border: "2px solid #FFC107"
+            }} />
             <Card text='white' className="m-auto my-4" style={{
                 width: "85%",
                 border: "none",

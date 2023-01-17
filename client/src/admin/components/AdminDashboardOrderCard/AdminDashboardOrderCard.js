@@ -33,13 +33,14 @@ const AdminDashboardOrderCard = (props) => {
     return (
         <div>
             <Card className="mx-auto mt-4 h-100" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
-                <Badge pill className={`bg-${variant[order.orderStatus]}`} style={{
+                {order && <Badge pill className={`bg-${variant[order.orderStatus]}`} style={{
                     width: '120px',
                     position: 'absolute',
                     top: '-3%',
                     right: '-3%',
                 }}>
-                    {status[order.orderStatus]}</Badge>
+                    {status[order.orderStatus]}
+                </Badge>}
 
                 <Card.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
                     <h4 className="text-danger text-center">Order#{order && order.orderToken}</h4>
@@ -81,6 +82,8 @@ const AdminDashboardOrderCard = (props) => {
                     </Row>}
 
                     <Row className="my-1 text-center">
+
+                        {/* TODO disable depending on order status */}
                         <Col>
                             <Button size="sm" variant='primary' onClick={handleClickPreparingButton}>Order Ready</Button>
                         </Col>
