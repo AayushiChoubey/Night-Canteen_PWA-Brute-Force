@@ -18,6 +18,8 @@ router.post('/add', [checkAdmin], async (req, res) => {
         data['dishName'] = req.body['dishName'];
         data['dishPrice'] = req.body['dishPrice'];
         data['dishImage'] = req.body['dishImage'];
+        data['dishIsNonVeg'] = req.body['dishIsNonVeg']
+        data['dishIsAvailable'] = req.body['dishIsAvailable']
 
         try {
             const dish = await addDoc(collection(db, "dishes"), data);

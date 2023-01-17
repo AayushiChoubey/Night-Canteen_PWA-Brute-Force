@@ -8,6 +8,8 @@ const AdminEditDishModal = (props) => {
 
     const [dishName, setDishName] = useState('');
     const [dishPrice, setDishPrice] = useState('');
+    const [dishIsNonVeg, setDishIsNonVeg] = useState(false);
+    const [dishIsAvailable, setDishIsAvailable] = useState(true);
     const dishId = props.dishId;
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const [dish, setDish] = useState(null);
@@ -16,6 +18,8 @@ const AdminEditDishModal = (props) => {
         setDish(requiredDish);
         setDishName(requiredDish['dishName']);
         setDishPrice(requiredDish['dishPrice']);
+        setDishIsNonVeg(requiredDish['dishIsNonVeg'] || false);
+        setDishIsAvailable(requiredDish['dishIsAvailable'] || true);
     }, [])
 
     const handleFormSubmit = async (event) => {
@@ -61,6 +65,19 @@ const AdminEditDishModal = (props) => {
                             required
                         />
                     </Form.Group>
+                    {/* TODO: Load checkbox checked or not into checked attribute */}
+                    <Form.Check
+                        type='switch'
+                        id='dishIsNonVeg'
+                        label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
+                        onChange={(event) => setDishIsNonVeg(event.target.checked)}
+                    />
+                    <Form.Check
+                        type='switch'
+                        id='dishIsAvailable'
+                        label='Is Dish Available?'
+                        onChange={(event) => setDishIsAvailable(event.target.checked)}
+                    />
                 </Modal.Body>
 
                 {/* footer */}

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Form, Modal, Button } from 'react-bootstrap';
+import { Form, Modal, Button, FormControl } from 'react-bootstrap';
 import { addDish } from '../../../repository/dishHandler';
 import { useSelector } from 'react-redux';
 
@@ -11,6 +11,8 @@ const AdminAddDishModal = (props) => {
 
     const dishImageFileRef = useRef();
     const [selectedDishImage, setSelectedDishImage] = useState(null);
+    const [dishIsNonVeg, setDishIsNonVeg] = useState(false);
+    const [dishIsAvailable, setDishIsAvailable] = useState(true);
     const handleChangeDishImageFile = (event) => {
         if (event.target.files.length > 0) {
             setSelectedDishImage(event.target.files[0]);
@@ -24,7 +26,7 @@ const AdminAddDishModal = (props) => {
 
         if (dishImageFileRef && dishImageFileRef.current) {
             try {
-                await addDish(dishName, dishPrice, selectedDishImage, user['token']);
+                await addDish(dishName, dishPrice, selectedDishImage, dishIsNonVeg, dishIsAvailable, user['token']);
                 alert('Dish added successfully!');
                 props.onHide();
             } catch (err) {
@@ -85,6 +87,19 @@ const AdminAddDishModal = (props) => {
                             </button>
                         </div>
                     </>
+
+                    <Form.Check
+                        type='switch'
+                        id='dishIsNonVeg'
+                        label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
+                        onChange={(event) => setDishIsNonVeg(event.target.checked)}
+                    />
+                    <Form.Check
+                        type='switch'
+                        id='dishIsAvailable'
+                        label='Is Dish Available?'
+                        onChange={(event) => setDishIsAvailable(event.target.checked)}
+                    />
                 </Modal.Body>
 
                 {/* footer */}

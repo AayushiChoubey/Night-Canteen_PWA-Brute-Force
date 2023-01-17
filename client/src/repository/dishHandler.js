@@ -10,11 +10,13 @@ const readImageAsBase64 = (image) => {
     });
 }
 
-export const addDish = async (dishName, dishPrice, dishImage, userToken) => {
+export const addDish = async (dishName, dishPrice, dishImage, dishIsNonVeg, dishIsAvailable, userToken) => {
     const data = {};
     data['dishName'] = dishName;
     data['dishPrice'] = dishPrice;
     data['dishImage'] = await readImageAsBase64(dishImage);
+    data['dishIsNonVeg'] = dishIsNonVeg;
+    data['dishIsAvailable'] = dishIsAvailable;
 
     return axios.post(`${process.env.REACT_APP_API_URL}/dish/add`, data, {
         headers: {
