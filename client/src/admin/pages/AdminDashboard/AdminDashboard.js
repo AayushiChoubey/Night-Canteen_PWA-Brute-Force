@@ -1,25 +1,59 @@
 
 import { useSelector } from 'react-redux';
 import AdminDashboardOrderCard from '../../components/AdminDashboardOrderCard/AdminDashboardOrderCard';
+import { Card } from 'react-bootstrap';
 
 const AdminDashboard = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
     return (
         <div>
-            <h1
-                className='display-1 text-center text-decoration-underlined'
-            >
+            {/* Dashboard section */}
+            <Card text='white' className="m-auto my-4" style={{
+                width: "85%",
+                border: "none",
+                boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)",
+                backgroundColor: "#FFC107"
+            }}>
+                <Card.Header>
+                    {/* ToDo: Add live Date and Time */}
+                    <h3 className="mb-0 text-center text-dark">Sunday, 15 Jan 11:43 PM</h3>
+                </Card.Header>
+                <Card.Body>
+                    <h5>Total Orders : {orders ? orders.length : `---`}</h5>
+                    {/* ToDo: Change with Logic */}
+                    <h5>Orders Delivered : 24</h5>
+                    <h5>Orders Pending : 28</h5>
+                </Card.Body>
+            </Card>
+
+            {/* List All Orders */}
+            <h3 className="text-center">
                 Orders
-            </h1>
-            {orders && orders.map((order) => {
-                return (
-                    <AdminDashboardOrderCard
-                        key={order['orderId']}
-                        orderId={order['orderId']}
-                    />
-                )
-            })}
+            </h3>
+            <hr style={{
+                margin: 'auto',
+                width: "40px",
+                border: "2px solid #FFC107"
+            }} />
+
+            <div className="d-flex flex-wrap m-auto" style={{ width: "85%" }}>
+
+                {orders && orders.map((order) => {
+                    return (
+                        <AdminDashboardOrderCard
+                            key={order['orderId']}
+                            orderId={order['orderId']}
+                        />
+                    )
+                })}
+
+                {!orders && <h6 className="text-center mt-4">Hurray! All Orders Delivered.</h6>}
+
+            </div>
+
+            {/* ToDo: Add Section to Show All Delivered Orders Separately */}
+
         </div>
     );
 }
