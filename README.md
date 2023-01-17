@@ -9,7 +9,6 @@ Let's make memories with midnight Cravings.</i>
 <br>
 
 [![Youtube Thumbnail](https://img.youtube.com/vi/oO6KV-n6GIA/0.jpg)](https://www.youtube.com/watch?v=oO6KV-n6GIA)
-<img width="550 px" src="https://user-images.githubusercontent.com/85924944/213009298-79c98b48-1ca5-4dc2-9ab7-108110de39d3.png">
 <hr/>
 <h3>Screenshots: </h3>
 <div>
