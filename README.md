@@ -7,6 +7,8 @@ Let's make memories with midnight Cravings.</i>
 <b>Client</b> : https://night-cravings.netlify.app<br>
 <b>Server</b>: https://night-cravings.onrender.com/dish/getAll<br>
 <br>
+
+[![Youtube Thumbnail](https://img.youtube.com/vi/oO6KV-n6GIA/0.jpg)](https://www.youtube.com/watch?v=oO6KV-n6GIA)
 <img width="550 px" src="https://user-images.githubusercontent.com/85924944/213009298-79c98b48-1ca5-4dc2-9ab7-108110de39d3.png">
 <hr/>
 <h3>Screenshots: </h3>
