@@ -43,26 +43,42 @@ const AdminDishCard = (props) => {
 
     return (
         <>
-            <div
-                className="d-flex border rounded p-2 align-items-center gap-2"
-            >
-                {dish && dish['dishName']}
-                <FontAwesomeIcon
-                    icon={faTrash}
-                    className="btn btn-primary"
-                    onClick={handleClickDeleteIcon}
-                />
-                <FontAwesomeIcon
-                    icon={faEdit}
-                    className="btn btn-primary"
-                    onClick={handleClickEditIcon}
-                />
-                <FontAwesomeIcon
-                    icon={faImage}
-                    className="btn btn-primary"
-                    onClick={handleClickEditImageIcon}
-                />
+            <div className="d-flex justify-content-between align-items-center mb-3">
+
+                {/* TO-DO */}
+                {/* change success with logic of veg nonveg in to success - danger */}
+                <div className="d-flex align-items-center">
+                    <i className="fa-regular fa-circle-stop text-success me-1"></i>
+                    <div className="text-center" style={{ fontSize: '12px' }}>
+                        <img
+                            // ToDo: write logic to show dish image if available else show default image
+                            // src="/assets/images/vectors/fooditem.png"
+                            src={dish && dish['dishImage']}
+                            alt={dish && dish['dishName']}
+                            style={{ width: "75px" }}
+                        />
+                        <br />
+                        <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
+                    </div>
+                </div>
+                <h6 className="m-0 text-center" style={{ flexGrow: '1', maxWidth: "40%" }}>
+                    {/* Paneer Bhurji + 2 Paratha with Raita */}
+                    {dish && dish.dishName}
+                </h6>
+                <div>
+                    <div className="d-flex justify-content-around align-items-center my-2">
+                        <i className="fa-solid fa-edit text-dark me-1" onClick={handleClickEditIcon} />
+                        <i className="fa-solid text-primary fa-image" onClick={handleClickEditImageIcon} />
+                    </div>
+                    <div className="d-flex justify-content-around align-items-center my-2">
+                        {/* TODO : change with available button with state */}
+                        <i className="fa-solid text-danger fa-ban me-1" />
+                        <i className="fa-solid text-dark fa-trash " onClick={handleClickDeleteIcon} />
+                    </div>
+                    <p className="text-muted m-0">Available</p>
+                </div>
             </div>
+            <hr/>
 
             {/* edit dish modal */}
             <AdminEditDishModal
