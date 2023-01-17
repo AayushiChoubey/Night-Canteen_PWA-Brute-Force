@@ -18,15 +18,16 @@ const AdminEditDishModal = (props) => {
         setDish(requiredDish);
         setDishName(requiredDish['dishName']);
         setDishPrice(requiredDish['dishPrice']);
-        setDishIsNonVeg(requiredDish['dishIsNonVeg'] || false);
-        setDishIsAvailable(requiredDish['dishIsAvailable'] || true);
+        setDishIsNonVeg(requiredDish['dishIsNonVeg']);
+        setDishIsAvailable(requiredDish['dishIsAvailable']);
     }, [])
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            await editDishWithoutImage(dishId, dishName, dishPrice, user['token']);
+            console.log(dishIsNonVeg, dishIsAvailable);
+            await editDishWithoutImage(dishId, dishName, dishPrice, dishIsNonVeg, dishIsAvailable, user['token']);
             alert('Dish edited successfully!');
             props.onHide();
         } catch (err) {
@@ -66,18 +67,24 @@ const AdminEditDishModal = (props) => {
                         />
                     </Form.Group>
                     {/* TODO: Load checkbox checked or not into checked attribute */}
-                    <Form.Check
-                        type='switch'
-                        id='dishIsNonVeg'
-                        label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
-                        onChange={(event) => setDishIsNonVeg(event.target.checked)}
-                    />
-                    <Form.Check
-                        type='switch'
-                        id='dishIsAvailable'
-                        label='Is Dish Available?'
-                        onChange={(event) => setDishIsAvailable(event.target.checked)}
-                    />
+                    <Form.Group className="d-flex justify-content-between mb-3">
+                        <Form.Check
+                            type='switch'
+                            id='dishIsNonVeg'
+                            label={dishIsNonVeg ? 'Non-Veg' : "Veg"}
+                            style={{ color: dishIsNonVeg ? 'red' : 'green' }}
+                            checked={dishIsNonVeg}
+                            onChange={(event) => setDishIsNonVeg(event.target.checked)}
+                        />
+
+                        <Form.Check
+                            type='switch'
+                            id='dishIsAvailable'
+                            label='Is Dish Available?'
+                            checked={dishIsAvailable}
+                            onChange={(event) => setDishIsAvailable(event.target.checked)}
+                        />
+                    </Form.Group>
                 </Modal.Body>
 
                 {/* footer */}

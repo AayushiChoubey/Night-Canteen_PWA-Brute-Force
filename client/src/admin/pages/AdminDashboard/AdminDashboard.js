@@ -7,7 +7,7 @@ const AdminDashboard = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
 
     return (
-        <div>
+        <div className='mb-5'>
             {/* Dashboard section */}
             <h3 className="text-center mt-3">
                 Admin Dashboard
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
                 border: "2px solid #FFC107"
             }} />
 
-            <div className="d-flex flex-wrap m-auto" style={{ width: "85%" }}>
+            <div className="d-flex flex-wrap m-auto justify-content-around" style={{ width: "85%" }}>
 
                 {orders && orders.map((order) => {
                     return (

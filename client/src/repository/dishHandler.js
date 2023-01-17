@@ -40,12 +40,14 @@ export const deleteDish = (dishId, userToken) => {
     });
 }
 
-export const editDishWithoutImage = (dishId, dishName, dishPrice, userToken) => {
+export const editDishWithoutImage = (dishId, dishName, dishPrice, dishIsNonVeg, dishIsAvailable, userToken) => {
     const data = {};
     data['dishId'] = dishId;
     data['dishName'] = dishName;
     data['dishPrice'] = dishPrice;
-
+    data['dishIsNonVeg'] = dishIsNonVeg;
+    data['dishIsAvailable'] = dishIsAvailable;
+    console.log(dishIsNonVeg, dishIsAvailable);
     return axios.post(`${process.env.REACT_APP_API_URL}/dish/editWithoutImage`, data, {
         headers: {
             "Authorization": `Bearer ${userToken}`
