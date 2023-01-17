@@ -1,12 +1,54 @@
+import jwtDecode from 'jwt-decode';
 import React, { useEffect } from 'react'
 import { Card } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUserRedux } from '../../../redux/slices/userSlice';
+import { generateJWTToken } from '../../../repository/userHandler';
 
 function LoginPage() {
+  const dispatch = useDispatch();
+  const navigate  = useNavigate();
+
+  const handleGoogleCallbackResponse = async (response) => {
+    const decodedToken = jwtDecode(response.credential);
+    try {
+      const userId = decodedToken['jti'];
+      const userName = decodedToken['name'];
+      const userEmail = decodedToken['email'];
+      const response = await generateJWTToken(userId, userName, userEmail);
+      const userData = response.data['userData'];
+      dispatch(loginUserRedux(userData));
+
+      if (userData.userType === '0') navigate('/');
+      else navigate('/admin/dashboard');
+      document.body.style.backgroundColor = '#fff';
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
     useEffect(() => {
         document.body.style.backgroundColor = '#212529';
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    
+    // user authentication
+  useEffect(() => {
+    if (window.google) {
+      // load google from global script
+      window.google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
+        callback: handleGoogleCallbackResponse
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInDiv'), {
+        theme: 'outline', size: 'large'
+      }
+      )
+    }
+  }, [window.google])
 
     return (
         <div>
