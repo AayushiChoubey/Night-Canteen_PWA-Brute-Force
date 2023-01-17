@@ -1,5 +1,6 @@
-import { Button } from "react-bootstrap";
+import { Button, Container, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { clearCartRedux } from "../../../redux/slices/cartSlice";
 import { createPaymentOrder, verifyPaymentOrder } from "../../../repository/orderHandler";
 import CartDishCard from "../../components/CartDishCard/CartDishCard";
@@ -46,33 +47,46 @@ const CartPage = () => {
 
     return (
         <div>
-            <h1
-                className="display-1 text-decoration-underline text-center"
-            >
-                Your order
+            <h1 className="text-center mt-3">
+                Confirm Order
             </h1>
+            <hr style={{
+                margin: 'auto',
+                width: "100px",
+                border: "3px solid #FFC107"
+            }} />
 
             {/* container for dishes in cart */}
-            <div
-                className="d-flex flex-wrap"
-            >
-                {cart && cart.map((dish) => {
-                    return (
-                        <CartDishCard
-                            key={dish['dishId']}
-                            dishId={dish['dishId']}
-                            dishCount={dish['dishCount']}
-                        />
-                    )
-                })}
-            </div>
+            <Card className="m-auto mt-4" style={{ width: "85%", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>
+                <Card.Body>
+                    {cart && cart.length > 0 ?
+                        cart.map((dish) => {
+                            return (
+                                <CartDishCard
+                                    key={dish['dishId']}
+                                    dishId={dish['dishId']}
+                                    dishCount={dish['dishCount']}
+                                />
+                            )
+                        })
+                        :
+                        <Container className="text-center">
+                            <h3 className="display-4">Your Cart is Empty!</h3>
+                            <Link className="text-italic" to='/' style={{ textDecoration: 'none', color: '#FFC107' }}>Add Dishes to Proceed Further</Link>
+                        </Container>
+                    }
+                </Card.Body>
+            </Card>
 
             {/* payment button */}
-            <Button
-                onClick={handleClickPayButton}
-            >
-                Pay
-            </Button>
+            <Container className="text-center my-4">
+                <Button
+                    onClick={handleClickPayButton}
+                    variant='warning'
+                >
+                    Pay to Order
+                </Button>
+            </Container>
         </div>
     );
 }
