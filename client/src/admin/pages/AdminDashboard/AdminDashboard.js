@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AdminDashboardOrderCard from '../../components/AdminDashboardOrderCard/AdminDashboardOrderCard';
 import { Card } from 'react-bootstrap';
@@ -6,26 +7,37 @@ import { useEffect, useState } from 'react';
 
 const AdminDashboard = () => {
     const orders = useSelector((state) => state.orders ? state.orders.value : null);
-
-    const [curDate, setCurDate] = useState(new Date());
-
-    // Function that displays the date in the dashboard. Modify to change format of date
-    const displayDate = () => {
-        return curDate.toString().substring(0, curDate.toString().lastIndexOf(":"));
-    };
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurDate(new Date())
+    const [dateAndTime, setDateAndTime] = useState('');
+    const getLiveDateAndTime = () => {
+        const date = new Date();
+        return date.toLocaleString('en-IN');
+    }
+    useEffect(()=> {
+        setInterval(()=> {
+            setDateAndTime(getLiveDateAndTime());
         }, 1000);
+    }, [])
 
-        return () => {
-            clearInterval(timer);
+    const [countDeliveredOrders, setCountDeliveredOrders] = useState(0);
+    const [countPendingOrders, setCountPendingOrders] = useState(0);
+    useEffect(() => {
+        if (orders) {
+            let countDelivered = 0;
+            let countPending = 0;
+            orders.forEach((order) => {
+                if (order['orderStatus'] === '3') {
+                    countDelivered++;
+                } else {
+                    countPending++;
+                }
+            })
+            setCountDeliveredOrders(countDelivered);
+            setCountPendingOrders(countPending);
         }
-    });
+    }, [orders])
 
     return (
-        <div>
+        <div className='mb-5'>
             {/* Dashboard section */}
             <h3 className="text-center mt-3">
                 Admin Dashboard
@@ -42,16 +54,14 @@ const AdminDashboard = () => {
                 backgroundColor: "#FFC107"
             }}>
                 <Card.Header>
-                    <h3 className="mb-0 text-center text-dark">
-                        {/* Sunday, 15 Jan 11:43 PM */}
-                        {displayDate()}
-                    </h3>
+                    {/* show live date and time in indian format */}
+                    <h3 className="mb-0 text-center text-dark">{dateAndTime}</h3>
                 </Card.Header>
                 <Card.Body>
                     <h5>Total Orders : {orders ? orders.length : `---`}</h5>
                     {/* ToDo: Change with Logic */}
-                    <h5>Orders Delivered : 24</h5>
-                    <h5>Orders Pending : 28</h5>
+                    <h5>Orders Delivered : {countDeliveredOrders}</h5>
+                    <h5>Orders Pending : {countPendingOrders}</h5>
                 </Card.Body>
             </Card>
 
@@ -65,7 +75,7 @@ const AdminDashboard = () => {
                 border: "2px solid #FFC107"
             }} />
 
-            <div className="d-flex flex-wrap m-auto" style={{ width: "85%" }}>
+            <div className="d-flex flex-wrap m-auto justify-content-around" style={{ width: "85%" }}>
 
                 {orders && orders.map((order) => {
                     return (

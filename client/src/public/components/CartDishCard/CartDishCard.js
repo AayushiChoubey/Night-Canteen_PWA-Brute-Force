@@ -35,31 +35,32 @@ const CartDishCard = (props) => {
 
     return (
         <div className="d-flex justify-content-between align-items-center mb-3">
-            {/* TO-DO */}
-            {/* change success with logic of veg nonveg in to success - danger */}
-            <i className="fa-regular fa-circle-stop text-success"></i>
-
-            <div className="text-center" style={{fontSize:'12px'}}>
-                {/* <img src="/assets/images/vectors/addnew.png" style={{ width: "50px" }} alt="" /> */}
-                <img 
-                    src={dish && dish['dishImage']} 
-                    alt={dish && dish['dishName']} 
-                    style={{ width: "75px" }} />
-                <br/>
-                <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
+            <div className="d-flex align-items-center">
+                <i className={`fa-regular fa-circle-stop ${dish && dish['dishIsNonVeg'] ? 'text-danger' : 'text-success'} me-1`}></i>
+                <div className="text-center" style={{ fontSize: '12px' }}>
+                    <img
+                        // ToDo: write logic to show dish image if available else show default image
+                        // src="/assets/images/vectors/fooditem.png"
+                        src={dish && dish['dishImage']}
+                        alt={dish && dish['dishName']}
+                        style={{ width: "75px" }}
+                    />
+                    <br />
+                    <i className="fa-solid fa-indian-rupee-sign me-1" />{dish && dish['dishPrice']}
+                </div>
             </div>
-            <h6 className="m-0 text-center" style={{ maxWidth: "40%" }}>
+            <h6 className="m-0 text-center" style={{ flexGrow: '1', maxWidth: "40%" }}>
                 {/* Paneer Bhurji + 2 Paratha with Raita */}
                 {dish && dish.dishName}
             </h6>
-            
+
             <p className="m-0 text-center">
                 <div className="mb-1">
-                <i className="fa-solid fa-minus mx-2 text-danger" onClick={handleClickMinusIcon}/> 
-                {orderCount}
-                <i className="fa-solid fa-plus mx-2 text-success" onClick={handleClickPlusIcon}/>
+                    <i className="fa-solid fa-minus mx-2 text-danger" onClick={handleClickMinusIcon} />
+                    {orderCount}
+                    <i className="fa-solid fa-plus mx-2 text-success" onClick={handleClickPlusIcon} />
                 </div>
-                <i className="fa-solid fa-trash mx-2 text-dark" onClick={handleClickDeleteIcon}/>
+                <i className="fa-solid fa-trash mx-2 text-dark" onClick={handleClickDeleteIcon} />
             </p>
         </div>
     );

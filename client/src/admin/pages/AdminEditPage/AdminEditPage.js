@@ -14,7 +14,7 @@ const AdminEditPage = () => {
 
     return (
         <>
-            <div>
+            <div className="mb-3">
                 {/* first add dish */}
                 <Container className="text-center my-4" onClick={() => setShowAddDishModal(true)}>
                     <img src="/assets/images/vectors/addnew.png" style={{width:"12rem"}} alt="add food item"/>
@@ -43,26 +43,6 @@ const AdminEditPage = () => {
                             )}
                         </Card.Body>
                     </Card>
-                </div>
-                <div
-
-                >
-                    <h1
-                        className="display-1 text-decoration-underline text-center"
-                    >
-                        Dishes
-                    </h1>
-
-                    <div
-                        className="d-flex flex-wrap gap-2"
-                    >
-                        {dishes && dishes.map((dish) =>
-                            <AdminDishCard
-                                key={dish['dishId']}
-                                dishId={dish['dishId']}
-                            />
-                        )}
-                    </div>
                 </div>
             </div>
 

@@ -44,11 +44,9 @@ const AdminDishCard = (props) => {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">
-
-                {/* TO-DO */}
-                {/* change success with logic of veg nonveg in to success - danger */}
+                
                 <div className="d-flex align-items-center">
-                    <i className="fa-regular fa-circle-stop text-success me-1"></i>
+                    <i className={`fa-regular fa-circle-stop ${dish && dish['dishIsNonVeg'] ? 'text-danger' : 'text-success'} me-1`}></i>
                     <div className="text-center" style={{ fontSize: '12px' }}>
                         <img
                             // ToDo: write logic to show dish image if available else show default image
@@ -69,13 +67,9 @@ const AdminDishCard = (props) => {
                     <div className="d-flex justify-content-around align-items-center my-2">
                         <i className="fa-solid fa-edit text-dark me-1" onClick={handleClickEditIcon} />
                         <i className="fa-solid text-primary fa-image" onClick={handleClickEditImageIcon} />
+                        <i className="fa-solid text-danger fa-trash " onClick={handleClickDeleteIcon} />
                     </div>
-                    <div className="d-flex justify-content-around align-items-center my-2">
-                        {/* TODO : change with available button with state */}
-                        <i className="fa-solid text-danger fa-ban me-1" />
-                        <i className="fa-solid text-dark fa-trash " onClick={handleClickDeleteIcon} />
-                    </div>
-                    <p className="text-muted m-0">Available</p>
+                    <p className="text-muted m-0">{dish && dish['dishIsAvailable'] ? 'Available' : 'Unavailable'}</p>
                 </div>
             </div>
             <hr/>

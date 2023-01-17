@@ -86,6 +86,8 @@ router.post('/editWithoutImage', [checkAdmin], async (req, res) => {
         const data = {};
         data['dishName'] = req.body['dishName'];
         data['dishPrice'] = req.body['dishPrice'];
+        data['dishIsNonVeg'] = req.body['dishIsNonVeg']
+        data['dishIsAvailable'] = req.body['dishIsAvailable']
 
         const dishId = req.body['dishId'];
 

@@ -29,11 +29,7 @@ const HomePage = () => {
     const [searchText, setSearchText] = useState('');
     const [filteredDishes, setFilteredDishes] = useState([]);
 
-    useEffect(() => {
-        setFilteredDishes(dishes);
-    }, [dishes]);
-
-    const handleClickSearchButton = () => {
+    const getFilteredDishes = () => {
         let requiredDishes = [];
         if (searchText === '') {
             requiredDishes = dishes;
@@ -43,7 +39,19 @@ const HomePage = () => {
             })
             requiredDishes = filteredDishes;
         }
-        setFilteredDishes(requiredDishes);
+
+        requiredDishes = requiredDishes.filter((dish) => {
+            return dish['dishIsAvailable'];
+        });
+        return requiredDishes;
+    }
+
+    useEffect(() => {
+        setFilteredDishes(getFilteredDishes());
+    }, [dishes]);
+
+    const handleClickSearchButton = () => {
+        setFilteredDishes(getFilteredDishes());
     }
 
     return (
@@ -83,7 +91,7 @@ const HomePage = () => {
                 }} />
 
                 <div
-                    className="d-flex flex-wrap m-auto"
+                    className="d-flex flex-wrap m-auto justify-content-around"
                     style={{width:"85%"}}
                 >
                     {orders && orders.map((order) => {
