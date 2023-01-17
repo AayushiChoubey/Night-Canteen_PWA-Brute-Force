@@ -9,6 +9,7 @@ Let's make memories with midnight Cravings.</i>
 <br>
 
 <h3> Video Demonstration</h3>
+
 [![Youtube Thumbnail](https://img.youtube.com/vi/oO6KV-n6GIA/0.jpg)](https://www.youtube.com/watch?v=oO6KV-n6GIA)
 <hr/>
 <h3>Screenshots: </h3>
@@ -75,7 +76,7 @@ Admin can set Name, Price, tag(Veg/Non-Veg), Availability, and Image of the dish
 <b>Error Page:<br></b>
 When a user tries to access the web addresses than available ones, then an error page will be directed.<br>
 
-<h3>Technologies Used:</h3><br>
+<h3>Technologies Used:</h3>
 -React.Js<br>
 -Node.Js<br>
 -Firebase<br>
