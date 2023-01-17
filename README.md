@@ -41,4 +41,17 @@ Admin can set Name, Price, tag(Veg/Non-Veg), Availability, and Image of the dish
 <b>Error Page:<br></b>
 When a user tries to access the web addresses than available ones, then an error page will be directed.<br>
 
+<h3>Technologies Used:</h3>
+-React.Js
+-Node.Js
+-Firebase
+-Express.Js
+-Router Dom
+-Redux
+-Razor Pay
+-Google OAuth
+-Bootstrap 
+
+
+
 
