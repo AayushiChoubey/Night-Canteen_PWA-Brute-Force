@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import PublicOrderCard from "../../components/PublicOrderCard/PublicOrderCard";
 import PublicDishCard from "../../components/PublicDishCard/PublicDishCard";
 import BottomNav from "../../components/BottomNav/BottomNav";
+import Footer from "../../components/Footer/footer"
 
 const HomePage = () => {
 
@@ -161,6 +162,7 @@ const HomePage = () => {
             </div>
 
             <BottomNav type="home" func={handleCartClick} />
+            <Footer/>
         </div>
     );
 }
