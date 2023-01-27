@@ -3,32 +3,29 @@ import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { Card, Row, Col, Badge } from 'react-bootstrap';
 import { changeOrderStatus } from '../../../repository/orderHandler';
+import useOrder from '../../../public/hooks/useOrder';
 
 const AdminDashboardOrderCard = (props) => {
 
-    const orderId = props.orderId;
-    const orders = useSelector((state) => state.orders ? state.orders.value : null);
-    const [order, setOrder] = useState(null);
-    const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
+    const order = useOrder(props.orderId);
     const [orderDate, setOrderDate] = useState(null);
-    const status = ['Unpaid', 'Preparing', 'Order Ready', 'Order Delivered'];
-    const variant = ['primary', 'primary', 'warning', 'success'];
-
     useEffect(() => {
-        const requiredOrder = orders.find((order) => order['orderId'] === orderId);
-        setOrder(requiredOrder);
-        setOrderDate(new Date(requiredOrder.orderTime));
-    }, [orderId, orders]);
+        if (order && order.orderDate) {
+            setOrderDate(new Date(order.orderDate));
+        }
+    }, [order]);
 
     const handleClickPreparingButton = async () => {
-        const response = await changeOrderStatus(orderId, '2');
-        console.log(response);
+        await changeOrderStatus(props.orderId, '2');
     }
 
     const handleClickDeliveredButton = async () => {
-        const response = await changeOrderStatus(orderId, '3');
-        console.log(response);
+        await changeOrderStatus(props.orderId, '3');
     }
+
+    const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
+    const status = ['Unpaid', 'Preparing', 'Order Ready', 'Order Delivered'];
+    const variant = ['primary', 'primary', 'warning', 'success'];
 
     return (
         <div className='my-4 '>
@@ -53,7 +50,6 @@ const AdminDashboardOrderCard = (props) => {
                         </Col>
                     </Row>
                     {order && order.orderDishes && order.orderDishes.map((dish) => {
-                        // console.log(order);
                         const requiredDish = dishes.find((element) => element['dishId'] === dish.dishId)
                         return (
                             <Row key={dish.dishId} className='align-items-center mb-2'>
@@ -72,18 +68,12 @@ const AdminDashboardOrderCard = (props) => {
                     })}
 
                     {order && <Row className="mb-1 text-center">
-                        {/* <Col>
-                            <Badge pill className={`h-100 bg-${variant[order.orderStatus]}`} style={{ width: '120px' }}>{status[order.orderStatus]}</Badge>
-                        </Col> */}
                         <Col className="text-muted">
-                            {/* 16/01/23 17:52 */}
                             {orderDate && `${orderDate.getDate()}/${orderDate.getMonth() + 1}/${orderDate.getFullYear()}  ${orderDate.getHours()}:${orderDate.getMinutes()}`}
                         </Col>
                     </Row>}
 
                     <Row className="my-1 text-center">
-
-                        {/* TODO disable depending on order status */}
                         <Col>
                             <Button size="sm" variant='primary' onClick={handleClickPreparingButton}>Order Ready</Button>
                         </Col>

@@ -19,7 +19,7 @@ import ErrorPage from './public/pages/ErrorPage/ErrorPage';
 
 const App = () => {
   const dispatch = useDispatch();
-  
+
   const user = useSelector((state) => state.user ? state.user.value : null);
 
   // get all dishes

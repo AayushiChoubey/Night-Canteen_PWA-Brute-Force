@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { db } = require('../firebaseConfig');
-const { collection, getDocs, addDoc, updateDoc, query, where } = require("firebase/firestore");
+const { collection, getDocs, addDoc, updateDoc, query, where, deleteDoc } = require("firebase/firestore");
 const crypto = require('crypto');
 const uuid = require('uuid');
 
