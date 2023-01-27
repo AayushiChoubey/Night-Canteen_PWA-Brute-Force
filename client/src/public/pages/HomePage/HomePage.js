@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Row, Col } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PublicOrderCard from "../../components/PublicOrderCard/PublicOrderCard";
 import PublicDishCard from "../../components/PublicDishCard/PublicDishCard";
 import BottomNav from "../../components/BottomNav/BottomNav";
@@ -29,7 +29,7 @@ const HomePage = () => {
     const [searchText, setSearchText] = useState('');
     const [filteredDishes, setFilteredDishes] = useState([]);
 
-    const getFilteredDishes = () => {
+    const getFilteredDishes = useCallback(() => {
         let requiredDishes = [];
         if (searchText === '') {
             requiredDishes = dishes;
@@ -44,11 +44,11 @@ const HomePage = () => {
             return dish['dishIsAvailable'];
         });
         return requiredDishes;
-    }
+    }, [dishes, searchText])
 
     useEffect(() => {
         setFilteredDishes(getFilteredDishes());
-    }, [dishes]);
+    }, [dishes, getFilteredDishes]);
 
     const handleClickSearchButton = () => {
         setFilteredDishes(getFilteredDishes());

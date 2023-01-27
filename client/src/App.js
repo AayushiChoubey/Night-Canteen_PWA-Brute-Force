@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
-import { loginUserRedux } from './redux/slices/userSlice';
 import { setDishesRedux } from './redux/slices/dishSlice';
 import { setOrdersRedux } from './redux/slices/orderSlice';
 
 import { getAllDishes } from './repository/dishHandler';
 import { getAllOrders } from './repository/orderHandler';
-import { generateJWTToken } from './repository/userHandler';
 
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
@@ -22,44 +19,8 @@ import ErrorPage from './public/pages/ErrorPage/ErrorPage';
 
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   const user = useSelector((state) => state.user ? state.user.value : null);
-
-  // user authentication
-  useEffect(() => {
-    if (window.google) {
-      // load google from global script
-      window.google.accounts.id.initialize({
-        client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
-        callback: handleGoogleCallbackResponse
-      });
-
-      window.google.accounts.id.renderButton(
-        document.getElementById('googleSignInDiv'), {
-        theme: 'outline', size: 'large'
-      }
-      )
-    }
-  }, [window.google])
-
-  const handleGoogleCallbackResponse = async (response) => {
-    const decodedToken = jwtDecode(response.credential);
-    try {
-      const userId = decodedToken['jti'];
-      const userName = decodedToken['name'];
-      const userEmail = decodedToken['email'];
-      const response = await generateJWTToken(userId, userName, userEmail);
-      const userData = response.data['userData'];
-      dispatch(loginUserRedux(userData));
-
-      if (userData.userType === '0') navigate('/');
-      else navigate('/admin/dashboard');
-      document.body.style.backgroundColor = '#fff';
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   // get all dishes
   useEffect(() => {
@@ -71,7 +32,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [])
+  }, [dispatch])
 
   // get all orders
   useEffect(() => {
@@ -83,8 +44,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  const orders = useSelector((state) => state.orders ? state.orders.value : null);
+  }, [dispatch]);
 
   return (
     <>

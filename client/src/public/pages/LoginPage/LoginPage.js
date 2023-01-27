@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate  = useNavigate();
 
-  const handleGoogleCallbackResponse = async (response) => {
+  const handleGoogleCallbackResponse = useCallback(async (response) => {
     const decodedToken = jwtDecode(response.credential);
     try {
       const userId = decodedToken['jti'];
@@ -26,11 +26,15 @@ function LoginPage() {
     } catch (err) {
       console.log(err);
     }
-  }
+  }, [dispatch, navigate])
 
-    useEffect(() => {
-        document.body.style.backgroundColor = '#212529';
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+      const currentColor = document.body.style.backgroundColor;
+      document.body.style.backgroundColor = '#212529';
+      
+      return () => {
+        document.body.style.backgroundColor = currentColor;
+      }
     }, [])
     
     // user authentication
@@ -48,7 +52,7 @@ function LoginPage() {
       }
       )
     }
-  }, [window.google])
+  }, [handleGoogleCallbackResponse])
 
     return (
         <div>

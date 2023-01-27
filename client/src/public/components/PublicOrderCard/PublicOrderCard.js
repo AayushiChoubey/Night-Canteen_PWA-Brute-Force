@@ -16,7 +16,7 @@ function PublicOrderCard(props) {
         const requiredOrder = orders.find((element) => element['orderId'] === orderId);
         setOrder(requiredOrder);
         setOrderDate(new Date(requiredOrder.orderTime));
-    }, [orderId]);
+    }, [orderId, orders]);
 
     return (
         <Card className="mx-auto mt-4 h-100 mb-4" style={{ width: "20rem", border: "none", boxShadow: "0 0 8px 0 rgb(0 0 0 / 15%)" }}>

@@ -12,15 +12,13 @@ const AdminEditDishModal = (props) => {
     const [dishIsAvailable, setDishIsAvailable] = useState(true);
     const dishId = props.dishId;
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
-    const [dish, setDish] = useState(null);
     useEffect(() => {
         const requiredDish = dishes.find((element) => element['dishId'] === dishId);
-        setDish(requiredDish);
         setDishName(requiredDish['dishName']);
         setDishPrice(requiredDish['dishPrice']);
         setDishIsNonVeg(requiredDish['dishIsNonVeg']);
         setDishIsAvailable(requiredDish['dishIsAvailable']);
-    }, [])
+    }, [dishId, dishes])
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();

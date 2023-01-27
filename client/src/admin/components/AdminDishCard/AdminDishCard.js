@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faImage, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { deleteDish } from "../../../repository/dishHandler";
 import AdminEditDishModal from "../AdminEditDishModal/AdminEditDishModal";
 import AdminEditDishImageModal from "../AdminEditDishImageModal/AdminEditDishImageModal";
@@ -13,9 +11,11 @@ const AdminDishCard = (props) => {
     const dishes = useSelector((state) => state.dishes ? state.dishes.value : null);
     const [dish, setDish] = useState(null);
     useEffect(() => {
-        const requiredDish = dishes.find((element) => element['dishId'] === dishId);
-        setDish(requiredDish);
-    }, [dishId]);
+        if (dishes && dishId) {
+            const requiredDish = dishes.find((element) => element['dishId'] === dishId);
+            setDish(requiredDish);
+        }
+    }, [dishId, dishes]);
 
     const handleClickDeleteIcon = async () => {
         const response = window.confirm('Do you really want to delete this dish?');

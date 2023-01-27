@@ -14,7 +14,7 @@ function BottomNav(props) {
             temp += element['dishPrice'] * dish['dishCount']
         })
         setTotal(temp)
-    }, [cart])
+    }, [cart, dishes])
 
     return (
         <Container>
