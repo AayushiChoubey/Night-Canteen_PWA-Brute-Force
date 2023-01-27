@@ -11,10 +11,14 @@ const AdminDashboard = () => {
         const date = new Date();
         return date.toLocaleString('en-IN');
     }
-    useEffect(()=> {
-        setInterval(()=> {
+    useEffect(() => {
+        const intervalId = setInterval(() => {
             setDateAndTime(getLiveDateAndTime());
         }, 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        }
     }, [])
 
     const [countDeliveredOrders, setCountDeliveredOrders] = useState(0);

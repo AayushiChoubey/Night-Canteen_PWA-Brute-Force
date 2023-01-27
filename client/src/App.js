@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setDishesRedux } from './redux/slices/dishSlice';
 import { setOrdersRedux } from './redux/slices/orderSlice';
-
-import { getAllDishes } from './repository/dishHandler';
-import { getAllOrders } from './repository/orderHandler';
 
 import AdminDashboard from './admin/pages/AdminDashboard/AdminDashboard';
 import HomePage from './public/pages/HomePage/HomePage';
@@ -17,33 +13,21 @@ import NavbarComponent from './public/components/NavbarComponent/NavbarComponent
 import LoginPage from './public/pages/LoginPage/LoginPage';
 import ErrorPage from './public/pages/ErrorPage/ErrorPage';
 
+import { io } from 'socket.io-client';
+
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user ? state.user.value : null);
 
-  // get all dishes
   useEffect(() => {
-    getAllDishes()
-      .then((response) => {
-        const dishes = response.data['dishes'];
-        dispatch(setDishesRedux(dishes));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [dispatch])
-
-  // get all orders
-  useEffect(() => {
-    getAllOrders()
-      .then((response) => {
-        const orders = response.data['orders'];
-        dispatch(setOrdersRedux(orders));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    let socket = io(process.env.REACT_APP_API_URL);
+    socket.on('dishes', (data) => {
+      dispatch(setDishesRedux(data));
+    });
+    socket.on('orders', (data) => {
+      dispatch(setOrdersRedux(data));
+    });
   }, [dispatch]);
 
   return (

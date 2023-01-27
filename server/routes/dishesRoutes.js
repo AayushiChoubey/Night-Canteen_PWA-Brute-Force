@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uuid = require('uuid');
 const { db } = require('../firebaseConfig');
-const { collection, addDoc, getDocs, deleteDoc, query, where, updateDoc } = require("firebase/firestore");
+const { collection, addDoc, getDocs, deleteDoc, query, where, updateDoc, onSnapshot } = require("firebase/firestore");
 const { checkAdmin } = require('../middleware');
 
 // dishModel
@@ -44,22 +44,24 @@ router.post('/add', [checkAdmin], async (req, res) => {
 
 router.get('/getAll', async (req, res) => {
     try {
-        const snapshot = await getDocs(collection(db, "dishes"));
+        const q = query(collection(db, 'dishes'));
+        const querySnapshot = await getDocs(q);
         const data = [];
-        snapshot.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
             data.push(doc.data());
         });
 
         res.status(200).json({
             'dishes': data
         });
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err);
         res.status(500).json({
             'message': 'Internal server error! Please try again later!'
         })
     }
-})
+});
 
 router.post('/delete', [checkAdmin], async (req, res) => {
     try {
@@ -130,4 +132,16 @@ router.post('/editImage', [checkAdmin], async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = function (io) {
+    // get a listener for firebase firestore dishes colleciton
+    const dishesCollection = collection(db, 'dishes');
+    const dishesCollectionListener = onSnapshot(dishesCollection, (querySnapshot) => {
+        const dishes = [];
+        querySnapshot.forEach((doc) => {
+            dishes.push(doc.data());
+        });
+        io.emit('dishes', dishes);
+    });
+
+    return router;
+};

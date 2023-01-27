@@ -3,7 +3,6 @@ const router = express.Router();
 const { db } = require('../firebaseConfig');
 const { collection, getDocs, addDoc, updateDoc, query, where, deleteDoc } = require("firebase/firestore");
 const crypto = require('crypto');
-const uuid = require('uuid');
 
 // orderModel
 // orderId
@@ -126,4 +125,15 @@ router.post('/changeOrderState', async (req, res) => {
     }
 })
 
-module.exports = router;
+module.exports = function (io) {
+    const ordersCollection = collection(db, 'orders');
+    const ordersCollectionListener = onSnapshot(ordersCollection, (querySnapshot) => {
+        const orders = [];
+        querySnapshot.forEach((doc) => {
+            orders.push(doc.data());
+        });
+        io.emit('orders', orders);
+    });
+
+    return router;
+};
