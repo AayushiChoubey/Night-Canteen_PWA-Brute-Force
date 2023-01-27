@@ -6,7 +6,7 @@ const cors = require('cors');
 
 // initialize firebase
 const { db } = require('./firebaseConfig');
-const { query, collection, getDocs } = require('firebase/firestore');
+const { query, collection, getDocs, where } = require('firebase/firestore');
 
 // middlewares
 app.use(express.json({
@@ -31,7 +31,7 @@ io.on('connection', async (socket) => {
     });
     socket.emit('dishes', data);
 
-    const q2 = query(collection(db, 'orders'));
+    const q2 = query(collection(db, 'orders'), where('orderStatus', '>=', '1'));
     const querySnapshot2 = await getDocs(q2);
     const data2 = [];
     querySnapshot2.forEach((doc) => {

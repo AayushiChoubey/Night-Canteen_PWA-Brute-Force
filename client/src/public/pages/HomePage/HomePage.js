@@ -43,7 +43,7 @@ const HomePage = () => {
             return dish['dishIsAvailable'];
         });
         return requiredDishes;
-    }, [dishes, searchText])
+    }, [dishes, searchText]);
 
     useEffect(() => {
         setFilteredDishes(getFilteredDishes());
